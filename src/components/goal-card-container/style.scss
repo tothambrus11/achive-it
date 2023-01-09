@@ -1,0 +1,36 @@
+@use "../../colors";
+
+@mixin goal-card-container{
+  display: block;
+  background: #FFFFFF;
+
+  box-shadow: 0 4px 10px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  min-width: 10px;
+  min-height: 10px;
+  text-align: center;
+  position: relative;
+  transition: .2s;
+
+  cursor: default;
+  user-select: none;
+
+  h2 {
+    font-weight: 400;
+    font-size: 18px;
+    color: colors.$secondary-text;
+  }
+}
+
+
+@mixin goal-card-container-hover{
+  box-shadow: 0 0 17px 4px rgba(0, 0, 0, 0.2);
+
+  h2 {
+    color: colors.$card-text-hover;
+  }
+
+  i {
+    background-color: colors.$card-text-hover;
+  }
+}

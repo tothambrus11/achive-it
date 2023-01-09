@@ -1,0 +1,87 @@
+@use "../font";
+
+#login-box {
+  max-width: 450px;
+  width: 100%;
+
+  box-sizing: border-box;
+  border-radius: 20px;
+  background-color: white;
+
+  padding-left: 32px;
+  padding-right: 32px;
+  padding-bottom: 32px;
+
+  .box-header{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    gap: 55px;
+    padding: 32px;
+
+
+    button {
+      font-weight: 500;
+      font-size: 18px;
+      background-color: transparent;
+      border: none;
+      outline: none;
+    }
+
+    .flying-thingy {
+      position: absolute;
+      bottom: 26px;
+
+      left: 0;
+      width: 28px;
+      height: 4px;
+      background-color: black;
+      border-radius: 2px;
+    }
+  }
+
+  .box-body{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+
+    input{
+      height: 43px;
+      background-color: #EDEDED;
+      padding: 0 16px;
+      border: none;
+      font-size: 18px;
+      font-weight: 400;
+      border-radius: 3px;
+      font-family: font.$font;
+      color: #333;
+
+      &:focus{
+        outline: 3px solid #7F7DEC;
+      }
+
+      &::placeholder {
+        font-style: italic;
+        color: #A0A0A0;
+      }
+
+    }
+  }
+
+  .box-footer {
+    button{
+      height: 43px;
+      background-color: #2E2C73;
+      border-radius: 3px;
+      font-size: 18px;
+      width: 162px;
+      color: white;
+      font-family: font.$font;
+      display: block;
+
+      margin: 32px auto auto;
+      border: none;
+    }
+  }
+}

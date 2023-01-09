@@ -1,0 +1,36 @@
+@use "../goal-card-container/style";
+@use "../../colors";
+
+:host{
+  @include style.goal-card-container();
+
+  border: 3px dashed colors.$secondary-text;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+
+  min-height: 100px;
+
+  * {
+    padding: 0;
+    margin: 0;
+  }
+
+  i {
+    mask: url(/public/add-sign.svg) no-repeat 50% 50%;
+    -webkit-mask: url(/public/add-sign.svg) no-repeat 50% 50%;
+    mask-size: cover;
+    -webkit-mask-size: cover;
+    height: 30px;
+    width: 30px;
+    background-color: colors.$secondary-text;
+  }
+
+}
+
+:host(:hover) {
+  @include style.goal-card-container-hover();
+}

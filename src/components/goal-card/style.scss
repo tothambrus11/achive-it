@@ -1,0 +1,25 @@
+@use "../goal-card-container/style";
+
+:host {
+  @include style.goal-card-container();
+
+  padding: 7px;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  align-items: center;
+}
+
+h2{
+  margin: 32px 20px;
+}
+
+.menu {
+  background-image: url(/public/hamburger.svg);
+  position: absolute;
+  right: 16px;
+  top: 14px;
+}
+
+:host(:hover) {
+  @include style.goal-card-container-hover();
+}

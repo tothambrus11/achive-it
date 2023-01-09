@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- metadata -->
+    <meta charset="UTF-8"/>
+    <link rel="icon" type="image/svg+xml" href="/vite.svg"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap"
+          rel="stylesheet">
+
+    <!-- include own styles -->
+    <link rel="stylesheet" href="src/style.css">
+    <link rel="stylesheet" href="src/landing/landing-page.css">
+
+
+    <title>Achievelt</title>
+</head>
+<body>
+<div class="heading">
+    <img src="/logo.png" alt="Achievelt" width="218" id="logo">
+</div>
+<section class="content">
+    <section class="review">
+        <p>
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent at dui hendrerit, dictum
+            odio id, mattis velit. Nullam porttitor eget sem eu pulvinar. Praesent ac convallis lectus.
+            Cras purus ligula, rhoncus vitae tellus consectetur, lobortis volutpat nisl. Sed dapibus
+            lectus orci, vel euismod purus porta sed."
+        </p>
+        <p style="text-align: right">
+            - All of our users
+            </p>
+    </section>
+
+    <section id="login-box">
+        <div class="box-header">
+            <button id="sign-in-button">Sign In</button>
+            <button id="sign-up-button">Sign Up</button>
+
+            <div class="flying-thingy"></div>
+        </div>
+
+
+        <form method="POST">
+            <div class="box-body">
+                <input type="text" name="name" placeholder="username"/>
+                <input type="password" name="pass" placeholder="password"/>
+            </div>
+
+            <div class="box-footer">
+                <button type="submit">Sign In</button>
+            </div>
+        </form>
+    </section>
+</section>
+
+<footer>
+    &copy; 2023 AchiveIt by Thomas and Ambrus.
+</footer>
+
+<script type="module" src="/src/landing/landing.ts"></script>
+</body>
+</html>

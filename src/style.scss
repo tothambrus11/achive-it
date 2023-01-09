@@ -1,0 +1,24 @@
+@use "component-list";
+@use "colors";
+@use "components/goal-card-container/style";
+
+body {
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+}
+
+.app-layout {
+  width: calc(100% - 64px);
+  margin: 0 auto;
+  max-width: 80%;
+
+  progress-bar {
+    margin-bottom: 25px;
+  }
+}
+
+h1 {
+  font-weight: 400;
+  font-size: 36px;
+}
+
