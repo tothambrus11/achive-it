@@ -1,0 +1,128 @@
+<style>
+    .checkbox-circle {
+        display: inline-flex;
+        overflow: hidden;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .circle-half {
+        height: 40px;
+        width: 20px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .circle-half > div {
+        height: inherit;
+        width: inherit;
+        position: absolute;
+        content: "";
+        border-radius: 20px 0 0 20px;
+        background-color: lime;
+        transform-origin: 100% 50%;
+        /* hidden by default */
+        transform: rotate(180deg);
+    }
+
+    .circle-half-right {
+        transform: scale(-1, -1);
+    }
+
+    .checkbox-circle .circle-half-right > div {
+        animation-name: rotate-circle-half--right;
+    }
+
+    .checkbox-part {
+        width: 20px;
+        height: 20px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .circle-half > div {
+        background-color: #669B45 !important;
+    }
+
+    .clipped {
+        clip-path: inset(2px);
+    }
+    .clipped .circle-half div {
+        background-color: #D0EBBF !important;
+    }
+    .checkbox-container{
+        width: 20px;
+        height: 20px;
+        position: relative;
+        cursor: pointer;
+    }
+
+    .checkbox-container > div {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .background-checkbox{
+        width: 20px;
+        height: 20px;
+        background-color: #fff;
+        z-index: -1;
+        outline: 2px solid #C8C8C8;
+        outline-offset: -2px;
+    }
+</style>
+<div class="checkbox-container">
+    <div style="z-index: 1">
+        <div class="checkbox-part clipped">
+            <div class="checkbox-circle">
+                <div class="circle-half">
+                    <div></div>
+                </div>
+                <div class="circle-half circle-half-right">
+                    <div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="checkbox-part">
+            <div class="checkbox-circle">
+                <div class="circle-half">
+                    <div></div>
+                </div>
+                <div class="circle-half circle-half-right">
+                    <div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="background-checkbox"></div>
+</div>
+<script>
+    let progress = 0;
+    setInterval(() => {
+progress += 0.001
+
+        let leftHalf = document.querySelectorAll(".circle-half> div");
+        let rightHalf = document.querySelectorAll(".circle-half-right> div");
+
+        let p1 = 180 - Math.min(progress * 2, 1) * 180;
+        leftHalf.forEach((element) => {
+            element.style.transform = `rotate(${Math.round(p1)}deg)`
+        });
+
+
+        let p2 = 180 - Math.max(progress * 2 - 1, 0) * 180;
+
+        rightHalf.forEach((element) => {
+            element.style.transform = `rotate(${Math.round(p2)}deg)`
+        });
+
+
+        progress %= 1;
+
+    }, 10);
+</script>

@@ -1,6 +1,5 @@
 @use "component-list";
 @use "colors";
-@use "components/goal-card-container/style";
 
 body {
   font-family: Inter, sans-serif;
@@ -8,8 +7,18 @@ body {
 }
 
 .app-layout {
-  width: calc(100% - 64px);
   margin: 0 auto;
+}
+
+.app-layout.dashboard {
+  max-width: 80%;
+  width: calc(100% - 64px);
+}
+
+$magic-number: 100px;
+
+.app-layout.goal {
+  width: calc(100% - #{$magic-number * 2});
   max-width: 80%;
 }
 

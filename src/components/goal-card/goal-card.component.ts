@@ -12,6 +12,7 @@ export class GoalCardComponent extends GoalCardContainerComponent implements OnI
 
     set progressRate(rate: number) {
         this.goal_.progress = rate;
+
         this.progress?.setAttribute("rate", rate.toString());
     }
 

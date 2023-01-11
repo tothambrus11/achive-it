@@ -5,7 +5,7 @@ export abstract class Component extends HTMLElement {
 
     protected readonly names: string[] = [];
 
-    private afterInit?: (component: Component) => void;
+    public afterInit?: (component: Component) => void;
 
     constructor(afterInit?: (component: Component) => void) {
         super();
