@@ -1,37 +1,24 @@
-import {Component} from "../../Component";
+import {OnInit, RegisteredComponent} from "../../Component";
 import {GoalSimpleData} from "../../lib/goal";
 import {ProgressBarComponent} from "../progress-bar/progressbar.component";
+import {GoalCardContainerComponent} from "../goal-card-container/goal-car-container.component";
 
-export class GoalCardComponent extends Component {
+@RegisteredComponent
+export class GoalCardComponent extends GoalCardContainerComponent implements OnInit {
     private goal_!: GoalSimpleData;
-    private readonly progress: ProgressBarComponent;
-    private readonly titleEl!: HTMLHeadingElement;
+    private progress?: ProgressBarComponent;
+    private titleEl?: HTMLHeadingElement;
     private menu!: HTMLImageElement;
-
-    constructor() {
-        super();
-
-        this.titleEl = document.createElement("h2");
-        this.shadowRoot!.append(this.titleEl)
-
-        this.progress = document.createElement("progress-bar") as ProgressBarComponent;
-        this.shadowRoot!.append(this.progress);
-
-        this.menu = document.createElement("img");
-        this.menu.src = "/hamburger.svg";
-        this.menu.classList.add("menu");
-        this.shadowRoot!.append(this.menu);
-
-    }
 
     set progressRate(rate: number) {
         this.goal_.progress = rate;
-        this.progress.setAttribute("rate", rate.toString());
+        this.progress?.setAttribute("rate", rate.toString());
     }
 
     set titleName(title: string) {
         this.goal_.name = title;
-        this.titleEl.innerText = title;
+        if (this.titleEl)
+            this.titleEl.innerText = title;
     }
 
     set goal(goal: GoalSimpleData) {
@@ -44,10 +31,22 @@ export class GoalCardComponent extends Component {
         return this.goal_;
     }
 
-    connectedCallback() {
-        this.classList.add('goal-card-container');
 
+    async onInit() {
         this.tabIndex = 0;
 
+        this.titleEl = document.createElement("h2");
+        this.append(this.titleEl)
+
+        this.progress = new ProgressBarComponent();
+        this.append(this.progress);
+
+        this.menu = document.createElement("img");
+        this.menu.src = "/hamburger.svg";
+        this.menu.classList.add("menu");
+        this.append(this.menu);
+
+        this.goal = this.goal_;
     }
+
 }

@@ -1,12 +1,10 @@
 @use "../goal-card-container/style";
 @use "../../colors";
 
-:host{
-  @include style.goal-card-container();
-
+.add-goal-card {
   border: 3px dashed colors.$secondary-text;
   border-radius: 10px;
-  display: flex;
+  display: flex !important;
   flex-direction: column;
   flex-wrap: nowrap;
   justify-content: center;
@@ -20,17 +18,12 @@
   }
 
   i {
-    mask: url(/add-sign.svg) no-repeat 50% 50%;
     -webkit-mask: url(/add-sign.svg) no-repeat 50% 50%;
+    mask: url(/add-sign.svg) no-repeat 50% 50%;
     mask-size: cover;
     -webkit-mask-size: cover;
     height: 30px;
     width: 30px;
     background-color: colors.$secondary-text;
   }
-
-}
-
-:host(:hover) {
-  @include style.goal-card-container-hover()
 }

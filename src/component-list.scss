@@ -1,11 +1,11 @@
 $components: [
-  "my-button",
-  "progress"
+  "add-goal-card",
+  "goal-card",
+  "goal-list",
+  "progress-bar"
 ];
 
 // Import all the styles for components. These will be scoped to the component
 @each $name in $components {
-  .#{$name} {
-    @import url("components/#{$name}/style");
-  }
+  @import url("components/#{$name}/style");
 }

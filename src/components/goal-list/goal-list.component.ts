@@ -1,19 +1,20 @@
-import {Component} from "../../Component";
+import {Component, OnInit, RegisteredComponent} from "../../Component";
 import {GoalCardComponent} from "../goal-card/goal-card.component";
+import {AddGoalCardComponent} from "../add-goal-card/add-goal-card.component";
 
-export class GoalListComponent extends Component {
+@RegisteredComponent
+export class GoalListComponent extends Component implements OnInit {
 
-    constructor() {
-        super();
+    async onInit() {
 
         for (let i = 0; i < 7; i++) {
-            let el = document.createElement("goal-card") as GoalCardComponent;
+            let el = new GoalCardComponent();
             el.goal = {
                 id: 0,
                 name: "Lorem ipsum dolor sit amet",
                 progress: i / 6,
             };
-            if(i == 2){
+            if (i == 2) {
                 el.goal = {
                     id: 0,
                     name: "Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet",
@@ -21,15 +22,11 @@ export class GoalListComponent extends Component {
                 }
             }
 
-            this.shadowRoot!.append(el);
+            this.append(el);
         }
 
-
-        let addGoalCard = document.createElement('add-goal-card');
-        this.shadowRoot!.append(addGoalCard);
-    }
-
-    connectedCallback() {
+        let addGoalCard = new AddGoalCardComponent();
+        this.append(addGoalCard);
     }
 }
 

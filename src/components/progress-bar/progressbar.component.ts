@@ -1,18 +1,17 @@
-import {Component} from "../../Component";
+import {Component, OnInit, RegisteredComponent} from "../../Component";
 
-const startHue = 0;
-const endHue = 122;
+const START_HUE = 0;
+const END_HUE = 122;
 
-export class ProgressBarComponent extends Component {
-    private readonly bar: HTMLDivElement;
+@RegisteredComponent
+export class ProgressBarComponent extends Component implements OnInit {
+    private bar?: HTMLDivElement;
 
-    constructor() {
-        super();
-
+    async onInit() {
         this.bar = document.createElement('div');
-        this.bar.style.backgroundColor = 'hsl('+startHue+', 52%, 45%)';
+        this.bar.style.backgroundColor = 'hsl(' + START_HUE + ', 52%, 45%)';
         this.bar.style.width = '0';
-        this.shadowRoot!.append(this.bar);
+        this.append(this.bar);
     }
 
     static get observedAttributes() {
@@ -20,14 +19,16 @@ export class ProgressBarComponent extends Component {
     }
 
     attributeChangedCallback(name: string, _oldValue: string, newValue: string) {
-        if(name.toLowerCase() !== 'rate')
+        if (name.toLowerCase() !== 'rate')
             return;
 
-        const rate = Math.round(Number.parseFloat(newValue) * 100)/100;
-        const hue = Math.round(startHue + (endHue - startHue)*rate);
+        const rate = Math.round(Number.parseFloat(newValue) * 100) / 100;
+        const hue = Math.round(START_HUE + (END_HUE - START_HUE) * rate);
 
-        this.bar.style.backgroundColor = 'hsl('+hue+', 52%, 45%)';
-        this.bar.style.width = (rate * 100).toString()+'%';
+        if (this.bar) {
+            this.bar.style.backgroundColor = 'hsl(' + hue + ', 52%, 45%)';
+            this.bar.style.width = (rate * 100).toString() + '%';
+        }
     }
 
 }

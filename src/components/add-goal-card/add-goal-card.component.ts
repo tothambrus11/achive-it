@@ -1,19 +1,20 @@
-import {Component} from "../../Component";
+import {OnInit, RegisteredComponent} from "../../Component";
+import {GoalCardContainerComponent} from "../goal-card-container/goal-car-container.component";
 
-export class AddGoalCardComponent extends Component {
-    constructor() {
-        super();
-        
+@RegisteredComponent
+export class AddGoalCardComponent extends GoalCardContainerComponent implements OnInit {
+
+    async onInit(): Promise<void> {
+
+        this.tabIndex = 0;
+
         const icon = document.createElement('i');
-        this.shadowRoot!.append(icon);
+        this.append(icon);
 
         const title = document.createElement("h2");
         title.innerHTML = 'Add Goal';
-        this.shadowRoot!.append(title);
-    }
+        this.append(title);
 
-    connectedCallback() {
-        this.tabIndex = 0;
     }
 
 }
