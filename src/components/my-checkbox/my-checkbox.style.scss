@@ -1,10 +1,14 @@
 .my-checkbox {
   display: block;
-  cursor: pointer;
   width: 20px;
   height: 20px;
   overflow: hidden;
   z-index: 1;
+  transform: scaleX(-1);
+
+  &.done {
+    background-color: #669B45;
+  }
 
   .checkbox-circle {
     display: inline-flex;
@@ -28,7 +32,6 @@
     position: absolute;
     content: "";
     border-radius: 20px 0 0 20px;
-    background-color: lime;
     transform-origin: 100% 50%;
     /* hidden by default */
     transform: rotate(180deg);
@@ -56,13 +59,30 @@
   .clipped {
     clip-path: inset(2px);
   }
+
   .clipped .circle-half div {
     background-color: #D0EBBF !important;
   }
-  .checkbox-container{
+
+  .checkbox-container {
     width: 20px;
     height: 20px;
     position: relative;
+
+
+  }
+
+  img {
+    display: none;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scaleX(-1); // it wasn't hacky enough
+    z-index: 2;
+  }
+
+  &.done img {
+    display: block !important;
   }
 
   .checkbox-container > div {
@@ -71,7 +91,8 @@
     left: 50%;
     transform: translate(-50%, -50%);
   }
-  .background-checkbox{
+
+  .background-checkbox {
     width: 20px;
     height: 20px;
     background-color: #fff;

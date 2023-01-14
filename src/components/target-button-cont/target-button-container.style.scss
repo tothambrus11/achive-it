@@ -1,0 +1,24 @@
+target-button-container {
+
+  div {
+    opacity: 0;
+    transition: .1s;
+
+    display: flex;
+    gap: 26px;
+    justify-content: center;
+  }
+
+  &:hover div {
+    opacity: 100%;
+    transform: scale(1);
+  }
+
+  img{
+    transition: .1s;
+  }
+  img:hover {
+    transform: scale(1.1);
+    filter: brightness(90%);
+  }
+}

@@ -1,6 +1,6 @@
-import {ProgressBarComponent} from "../components/progress-bar/progressbar.component";
-import {GoalListComponent} from "../components/goal-list/goal-list.component";
-import {MyHeaderComponent} from "../components/my-header/my-header.component";
+import {ProgressBarComponent} from "@components/progress-bar/progressbar.component";
+import {GoalListComponent} from "@components/goal-list/goal-list.component";
+import {MyHeaderComponent} from "@components/my-header/my-header.component";
 
 const appContainer = document.querySelector(".app-layout")!;
 

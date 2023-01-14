@@ -1,9 +1,12 @@
-@use "component-list";
 @use "colors";
 
 body {
   font-family: Inter, sans-serif;
   font-size: 16px;
+  overflow-x: hidden;
+  width: 100%;
+  height: 100%;
+  margin: 0;
 }
 
 .app-layout {

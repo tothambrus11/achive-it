@@ -1,7 +1,9 @@
-import {OnInit, RegisteredComponent} from "../../Component";
+import {OnInit, RegisteredComponent} from "../../core/Component";
 import {GoalSimpleData} from "../../lib/goal";
 import {ProgressBarComponent} from "../progress-bar/progressbar.component";
 import {GoalCardContainerComponent} from "../goal-card-container/goal-car-container.component";
+
+import "./goal-card.style.scss";
 
 @RegisteredComponent
 export class GoalCardComponent extends GoalCardContainerComponent implements OnInit {
@@ -48,6 +50,10 @@ export class GoalCardComponent extends GoalCardContainerComponent implements OnI
         this.append(this.menu);
 
         this.goal = this.goal_;
+
+        this.addEventListener('click', () => {
+            window.location.href = '/goal.html';
+        });
     }
 
 }

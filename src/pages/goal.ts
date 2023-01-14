@@ -1,8 +1,8 @@
-import {MyHeaderComponent} from "../components/my-header/my-header.component";
-import {ProgressBarComponent} from "../components/progress-bar/progressbar.component";
-import {MyCheckboxComponent} from "../components/my-checkbox/my-checkbox.component";
+import {MyHeaderComponent} from "@components/my-header/my-header.component";
+import {ProgressBarComponent} from "@components/progress-bar/progressbar.component";
 import {calculateProgress, Target, TargetType} from "../lib/target";
-import {MyTargetComponent} from "../components/my-target/my-target.component";
+import {MyTargetComponent} from "@components/my-target/my-target.component";
+import {IconButtonComponent} from "@components/icon-button/icon-button.component";
 
 const appContainer = document.querySelector(".app-layout")!;
 
@@ -15,9 +15,24 @@ titleEl.innerText = "My Goals";
 appContainer.appendChild(titleEl);
 
 let progress = new ProgressBarComponent();
-progress.style.marginBottom = "32px";
+progress.style.marginBottom = "10px";
 appContainer.appendChild(progress);
 
+let buttonContainer = document.createElement('div');
+buttonContainer.style.display = 'flex';
+buttonContainer.style.flexDirection = 'row';
+buttonContainer.style.justifyContent = 'flex-end';
+buttonContainer.style.gap = '5px';
+buttonContainer.style.marginBottom = "32px";
+appContainer.appendChild(buttonContainer);
+
+let markComplete = new IconButtonComponent('/icons/tick-circle.svg', 'MARK COMPLETED');
+markComplete.classList.add('icon-button-green');
+buttonContainer.appendChild(markComplete);
+
+let cancelGoals = new IconButtonComponent('/icons/very-dissatisfied-circle.svg', 'CANCEL GOAL');
+cancelGoals.classList.add('icon-button-red');
+buttonContainer.appendChild(cancelGoals);
 
 let targets: Target[] = [
     {
@@ -32,7 +47,7 @@ let targets: Target[] = [
         done: false,
         targetType: TargetType.REACH_TARGET_1B1,
         extraData: {
-            amountToCollect: 10,
+            targetAmount: 10,
             currentAmount: 3
         }
     },
@@ -42,7 +57,7 @@ let targets: Target[] = [
         done: false,
         targetType: TargetType.COLLECT_MONEY,
         extraData: {
-            amountToCollect: 110,
+            targetAmount: 110,
             currentAmount: 95
         }
     },
@@ -72,9 +87,32 @@ let targets: Target[] = [
                 date: "2023-12-23",
             },
             {
+                title: "Chop up the potatoes",
+                children: [],
+                done: false,
+                targetType: TargetType.REACH_TARGET_1B1,
+                extraData: {
+                    targetAmount: 8,
+                    currentAmount: 6
+                }
+            },
+            {
                 title: "Wash the remanining dishes by hand",
                 done: false,
-                children: [],
+                children: [
+                    {
+                        title: "Clean the toilet",
+                        done: false,
+                        children: [],
+                        targetType: TargetType.TASK,
+                    },
+                    {
+                        title: "Clean the sink",
+                        done: true,
+                        children: [],
+                        targetType: TargetType.TASK,
+                    }
+                ],
                 targetType: TargetType.TASK,
                 date: "2023-12-23",
                 details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." +
@@ -86,11 +124,44 @@ let targets: Target[] = [
             },
 
         ],
+    },
+    {
+        title: "Clean the bathroom",
+        done: true,
+        targetType: TargetType.TASK,
+        children: [
+            {
+                title: "Clean the toilet",
+                done: true,
+                children: [],
+                targetType: TargetType.TASK,
+            },
+            {
+                title: "Clean the sink",
+                done: true,
+                children: [],
+                targetType: TargetType.TASK,
+            }
+        ],
     }
 ]
 
+export function updateGoalProgress() {
+    let p = 0;
+    targets.forEach((target) => {
+        p += target.calculatedProgress!;
+    });
+    p /= targets.length;
+    progress.setAttribute("rate", p.toString());
+}
+
 let targetListEl = document.createElement("div");
 targetListEl.classList.add("target-list");
+cancelGoals.addEventListener('click', () => {
+    targetListEl.innerHTML = '';
+    targets = new Array<Target>();
+    progress.setAttribute('rate', '0');
+});
 
 let overallProgress = 0;
 targets.forEach(target => {
@@ -103,20 +174,11 @@ if (targets.length > 0) {
 console.log(overallProgress);
 progress.setAttribute('rate', overallProgress.toString());
 
-
 for (let target of targets) {
     let el = new MyTargetComponent(target);
     targetListEl.append(el);
+    markComplete.addEventListener('click', () => el.finishTarget());
 }
 appContainer.appendChild(targetListEl);
-
-let checkbox = new MyCheckboxComponent(() => {
-    setInterval(() => {
-        (checkbox as MyCheckboxComponent).progress += 0.01;
-    }, 10);
-});
-
-appContainer.appendChild(checkbox);
-
 
 export default 10;

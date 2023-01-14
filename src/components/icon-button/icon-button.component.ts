@@ -1,6 +1,6 @@
 import {Component, OnInit, RegisteredComponent} from "../../core/Component";
 
-import "./style.scss";
+import "./icon-button.style.scss";
 
 @RegisteredComponent
 export class IconButtonComponent extends Component implements OnInit {

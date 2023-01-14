@@ -1,5 +1,6 @@
-import {Component, OnInit, RegisteredComponent} from "../../Component";
+import {Component, OnInit, RegisteredComponent} from "../../core/Component";
 
+import "./my-header.style.scss";
 @RegisteredComponent
 export class MyHeaderComponent extends Component implements OnInit {
 

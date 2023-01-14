@@ -1,7 +1,9 @@
-import {Component, OnInit, RegisteredComponent} from "../../Component";
+import {Component, OnInit, RegisteredComponent} from "../../core/Component";
 
 const START_HUE = 0;
 const END_HUE = 122;
+
+import "./style.scss";
 
 @RegisteredComponent
 export class ProgressBarComponent extends Component implements OnInit {

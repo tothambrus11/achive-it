@@ -3,8 +3,8 @@ const flyingThing = box.querySelector<HTMLDivElement>(".flying-thingy")!;
 const signInButton = box.querySelector<HTMLButtonElement>("#sign-in-button")!;
 const signUpButton = box.querySelector<HTMLButtonElement>("#sign-up-button")!;
 
-const form = box.querySelector<HTMLFormElement>("form")!;
-const formButton = form.querySelector<HTMLButtonElement>("button")!;
+const formSignIn = box.querySelector<HTMLFormElement>("#form-sign-in")!;
+const formSignUp = box.querySelector<HTMLFormElement>("#form-sign-up")!;
 
 function moveFlyingThingTo(x: number) {
     flyingThing.style.left = `${x}px`;
@@ -25,8 +25,8 @@ signUpButton.addEventListener("click", () => {
 });
 
 function updateForm() {
-    form.action = '/dashboard.html';//isSignIn ? '/sign-in' : '/sign-up';
-    formButton.innerText = isSignIn ? 'Sign In' : 'Sign Up';
+    formSignIn.style.display = isSignIn ? 'block' : 'none';
+    formSignUp.style.display = !isSignIn ? 'block' : 'none';
 }
 
 function signInButtonX() {
@@ -37,8 +37,10 @@ function signUpButtonX() {
     return signUpButton.offsetLeft + signUpButton.offsetWidth / 2 - flyingThing.offsetWidth / 2;
 }
 
-moveFlyingThingTo(signInButtonX());
-updateForm();
+document.addEventListener('readystatechange', () => {
+    updateForm();
+    moveFlyingThingTo(signInButtonX());
+});
 
 window.addEventListener("resize", () => {
     flyingThing.style.transition = ".0s";

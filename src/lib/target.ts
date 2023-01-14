@@ -5,7 +5,7 @@ export enum TargetType {
 }
 
 interface CollectAmountExtraData {
-    amountToCollect: number;
+    targetAmount: number;
     currentAmount: number;
 }
 
@@ -44,7 +44,7 @@ export function calculateProgress(target: Target): number {
             return target.calculatedProgress = +target.done;
         } else if (target.targetType === TargetType.REACH_TARGET_1B1 || target.targetType === TargetType.COLLECT_MONEY) {
             let t = target as CollectMoneyTarget | ReachTarget1B1Target;
-            return t.calculatedProgress = t.extraData.currentAmount / t.extraData.amountToCollect;
+            return t.calculatedProgress = t.extraData.currentAmount / t.extraData.targetAmount;
         }
         throw new Error("Unknown target type");
     } else {

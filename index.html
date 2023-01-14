@@ -23,6 +23,7 @@
 <div class="heading">
     <img src="/logo.png" alt="Achievelt" width="218" id="logo">
 </div>
+
 <section class="content">
     <section class="review">
         <p>
@@ -45,10 +46,10 @@
         </div>
 
 
-        <form id="form-sign-in" method="POST" style="display: block">
+        <form id="form-sign-in" method="POST" action="dashboard.html" style="display: block">
             <div class="box-body">
-                <input type="text" name="name" placeholder="username"/>
-                <input type="password" name="pass" placeholder="password"/>
+                <input type="text" name="name" placeholder="username" required />
+                <input type="password" name="pass" placeholder="password" required />
             </div>
 
             <div class="box-footer">
@@ -56,7 +57,7 @@
             </div>
         </form>
 
-        <form id="form-sign-up" method="POST" style="display: none">
+        <form id="form-sign-up" method="POST" action="dashboard.html" style="display: none">
             <div class="box-body">
                 <input type="number" placeholder="ID" name="id" required />
                 <input type="text" placeholder="Name" name="name" required />

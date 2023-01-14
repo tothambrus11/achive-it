@@ -46,7 +46,7 @@
     gap: 8px;
 
 
-    input{
+    input,textarea,select {
       height: 43px;
       background-color: #EDEDED;
       padding: 0 16px;
@@ -57,7 +57,7 @@
       font-family: font.$font;
       color: #333;
 
-      &:focus{
+      &:focus-visible{
         outline: 3px solid #7F7DEC;
       }
 
@@ -65,6 +65,14 @@
         font-style: italic;
         color: #A0A0A0;
       }
+    }
+
+    textarea {
+      padding: 10px;
+      max-width: 100%;
+      width: 100%;
+      min-height: 80px;
+      box-sizing: border-box;
     }
   }
 

@@ -1,5 +1,7 @@
-import {OnInit, RegisteredComponent} from "../../Component";
+import {OnInit, RegisteredComponent} from "../../core/Component";
 import {GoalCardContainerComponent} from "../goal-card-container/goal-car-container.component";
+
+import "./add-goal-card.style.scss";
 
 @RegisteredComponent
 export class AddGoalCardComponent extends GoalCardContainerComponent implements OnInit {

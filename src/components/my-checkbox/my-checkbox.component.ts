@@ -1,4 +1,6 @@
-import {Component, OnInit, RegisteredComponent} from "../../Component";
+import {Component, OnInit, RegisteredComponent} from "../../core/Component";
+
+import "./my-checkbox.style.scss";
 
 @RegisteredComponent
 export class MyCheckboxComponent extends Component implements OnInit {
@@ -9,7 +11,7 @@ export class MyCheckboxComponent extends Component implements OnInit {
     async onInit() {
         this.content = document.createElement("div");
         this.content.innerHTML = `
-
+<img src="/icons/check-small.svg" alt="" width="16" height="16">
 <div class="checkbox-container">
     <div style="z-index: 1">
         <div class="checkbox-part clipped">
@@ -49,15 +51,15 @@ export class MyCheckboxComponent extends Component implements OnInit {
 
     private progress_ = 0;
 
-    get progress(){
+    get progress() {
         return this.progress_;
     }
 
-    set progress(progress_: number){
-        if(progress_ > 1) progress_ %= 1;
+    set progress(progress_: number) {
+        if (progress_ > 1) progress_ %= 1;
         this.progress_ = progress_;
 
-        if(!this.leftHalf || !this.rightHalf) return;
+        if (!this.leftHalf || !this.rightHalf) return;
 
         let p1 = 180 - Math.min(progress_ * 2, 1) * 180;
 
@@ -71,5 +73,11 @@ export class MyCheckboxComponent extends Component implements OnInit {
         this.rightHalf.forEach((element) => {
             (<HTMLDivElement>element).style.transform = `rotate(${Math.round(p2)}deg)`
         });
+
+        if(progress_ === 1) {
+            this.classList.add("done");
+        } else {
+            this.classList.remove("done");
+        }
     }
 }
