@@ -1,4 +1,11 @@
 .my-checkbox {
+  display: block;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+  z-index: 1;
+
   .checkbox-circle {
     display: inline-flex;
     overflow: hidden;
@@ -56,7 +63,6 @@
     width: 20px;
     height: 20px;
     position: relative;
-    cursor: pointer;
   }
 
   .checkbox-container > div {

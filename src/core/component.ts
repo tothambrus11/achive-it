@@ -54,10 +54,12 @@ export interface OnInit {
 
 export const registeredComponents = new Set<string>();
 
+export interface ComponentInformation {
+}
+
 /**
  * Registers a class as a custom html element and initializes the name of the component that will be
  * later used to add css classes to the element automatically.
- * @param constructor class to register as a custom element
  */
 export function RegisteredComponent<T extends { new(...args: any[]): {} }>(constructor: T) {
     const componentName_ = convertToComponentName(constructor.name);
@@ -67,6 +69,5 @@ export function RegisteredComponent<T extends { new(...args: any[]): {} }>(const
         customElements.define(componentName_, constructor);
         registeredComponents.add(componentName_);
     }
-
     return constructor;
 }
