@@ -1,4 +1,4 @@
-import {Component, OnInit, RegisteredComponent} from "../../core/Component";
+import {Component, OnInit, RegisteredComponent} from "../../core/component";
 
 const START_HUE = 0;
 const END_HUE = 122;

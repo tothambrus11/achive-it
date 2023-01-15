@@ -1,4 +1,4 @@
-import {Component, RegisteredComponent} from "../../core/Component";
+import {Component, RegisteredComponent} from "../../core/component";
 
 import "./action-list.style.scss";
 

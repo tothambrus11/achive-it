@@ -1,4 +1,4 @@
-import {Component, OnInit, RegisteredComponent} from "../../core/Component";
+import {Component, OnInit, RegisteredComponent} from "../../core/component";
 
 import "./icon-button.style.scss";
 

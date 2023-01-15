@@ -1,4 +1,4 @@
-import {Component, OnInit, RegisteredComponent} from "../../core/Component";
+import {Component, OnInit, RegisteredComponent} from "../../core/component";
 import {GoalCardComponent} from "../goal-card/goal-card.component";
 import {AddGoalCardComponent} from "../add-goal-card/add-goal-card.component";
 

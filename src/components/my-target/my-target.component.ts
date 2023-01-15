@@ -1,4 +1,4 @@
-import {Component, OnInit, RegisteredComponent} from "../../core/Component";
+import {Component, OnInit, RegisteredComponent} from "../../core/component";
 import {calculateProgress, Target, TargetType} from "../../lib/target";
 import {MyCheckboxComponent} from "../my-checkbox/my-checkbox.component";
 import {removeTopLevelTarget, updateGoalProgress} from "../../pages/goal";

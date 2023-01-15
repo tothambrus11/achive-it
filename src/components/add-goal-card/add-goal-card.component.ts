@@ -1,4 +1,4 @@
-import {OnInit, RegisteredComponent} from "../../core/Component";
+import {OnInit, RegisteredComponent} from "../../core/component";
 import {GoalCardContainerComponent} from "../goal-card-container/goal-car-container.component";
 
 import "./add-goal-card.style.scss";
