@@ -24,6 +24,7 @@ export class MyTargetComponent extends Component implements OnInit {
     private titleInput?: HTMLInputElement;
     private maxAmountEl?: HTMLSpanElement;
     private currentAmountEl?: ControlInputComponent;
+    /* @ts-ignore */
     private $targetAmount?: Observable<number>;
     private $currentAmount?: Observable<number>;
 

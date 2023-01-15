@@ -9,6 +9,7 @@ import {ActionButtonComponent} from "@components/action-button/action-button.com
 import {
     TargetTypeSelectionComponent
 } from "@components/target-type-selection/target-type-selection.component";
+import "../style.scss";
 
 const appContainer = document.querySelector(".app-layout")!;
 

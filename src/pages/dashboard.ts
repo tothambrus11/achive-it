@@ -1,6 +1,7 @@
 import {ProgressBarComponent} from "@components/progress-bar/progressbar.component";
 import {GoalListComponent} from "@components/goal-list/goal-list.component";
 import {MyHeaderComponent} from "@components/my-header/my-header.component";
+import "../style.scss";
 
 const appContainer = document.querySelector(".app-layout")!;
 

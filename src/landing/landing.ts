@@ -1,3 +1,6 @@
+import "../style.scss";
+import "./landing-page.scss";
+
 const box = document.querySelector("#login-box")!;
 const flyingThing = box.querySelector<HTMLDivElement>(".flying-thingy")!;
 const signInButton = box.querySelector<HTMLButtonElement>("#sign-in-button")!;
