@@ -3,7 +3,9 @@ import {TargetTypeSelectionComponent} from "@components/target-type-selection/ta
 
 import "./target-button-container.style.scss";
 
-@RegisteredComponent
+@RegisteredComponent({
+    name: 'target-button-container'
+})
 export class TargetButtonContainerComponent extends Component implements OnInit {
     private targetTypeSelection?: TargetTypeSelectionComponent;
 

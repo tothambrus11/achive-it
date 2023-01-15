@@ -2,7 +2,9 @@ import {Component, OnInit, RegisteredComponent} from "../../core/component";
 
 import "./target-type-selection.style.scss";
 
-@RegisteredComponent
+@RegisteredComponent({
+    name: 'target-type-selection'
+})
 export class TargetTypeSelectionComponent extends Component implements OnInit {
     async onInit() {
         const insertTaskButton = document.createElement('button');

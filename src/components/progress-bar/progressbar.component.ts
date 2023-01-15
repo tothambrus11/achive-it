@@ -5,7 +5,9 @@ const END_HUE = 122;
 
 import "./style.scss";
 
-@RegisteredComponent
+@RegisteredComponent({
+    name: 'progress-bar'
+})
 export class ProgressBarComponent extends Component implements OnInit {
     private bar?: HTMLDivElement;
 

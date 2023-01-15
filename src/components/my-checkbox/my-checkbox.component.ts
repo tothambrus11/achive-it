@@ -2,7 +2,9 @@ import {Component, OnInit, RegisteredComponent} from "../../core/component";
 
 import "./my-checkbox.style.scss";
 
-@RegisteredComponent
+@RegisteredComponent({
+    name: 'my-checkbox'
+})
 export class MyCheckboxComponent extends Component implements OnInit {
     private content?: HTMLDivElement;
     private leftHalf?: NodeListOf<Element>;

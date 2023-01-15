@@ -3,7 +3,10 @@ import {Observable} from "../../core/observable";
 
 import "./date-input.style.scss";
 
-@RegisteredComponent
+
+@RegisteredComponent({
+    name: 'date-input'
+})
 export class DateInputComponent extends Component implements OnInit {
     private dateInput?: HTMLInputElement;
 

@@ -5,7 +5,9 @@ import {GoalCardContainerComponent} from "../goal-card-container/goal-car-contai
 
 import "./goal-card.style.scss";
 
-@RegisteredComponent
+@RegisteredComponent({
+    name: 'goal-card'
+})
 export class GoalCardComponent extends GoalCardContainerComponent implements OnInit {
     private goal_!: GoalSimpleData;
     private progress?: ProgressBarComponent;

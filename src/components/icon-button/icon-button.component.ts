@@ -2,7 +2,9 @@ import {Component, OnInit, RegisteredComponent} from "../../core/component";
 
 import "./icon-button.style.scss";
 
-@RegisteredComponent
+@RegisteredComponent({
+    name: "icon-button"
+})
 export class IconButtonComponent extends Component implements OnInit {
 
     constructor(private icon: string, private text: string) {

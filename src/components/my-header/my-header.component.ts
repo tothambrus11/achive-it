@@ -1,7 +1,10 @@
 import {Component, OnInit, RegisteredComponent} from "../../core/component";
 
 import "./my-header.style.scss";
-@RegisteredComponent
+
+@RegisteredComponent({
+    name: 'my-header'
+})
 export class MyHeaderComponent extends Component implements OnInit {
 
     private prev_!: HTMLAnchorElement;

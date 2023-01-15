@@ -3,7 +3,9 @@ import {GoalCardComponent} from "../goal-card/goal-card.component";
 import {AddGoalCardComponent} from "../add-goal-card/add-goal-card.component";
 
 import "./goal-list.style.scss";
-@RegisteredComponent
+@RegisteredComponent({
+    name: "goal-list"
+})
 export class GoalListComponent extends Component implements OnInit {
 
     async onInit() {

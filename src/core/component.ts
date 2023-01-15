@@ -12,8 +12,8 @@ export abstract class Component extends HTMLElement {
 
         let proto = Object.getPrototypeOf(this);
 
-        while (proto !== Component.prototype && proto !== Object.prototype) {
-            this.names.push(convertToComponentName(proto.constructor.name));
+        while (proto !== Component.prototype && proto !== Object.prototype && proto.componentName) {
+            this.names.push(proto.componentName);
             proto = Object.getPrototypeOf(proto)
         }
 
@@ -41,11 +41,10 @@ export abstract class Component extends HTMLElement {
         }
     }
 
-}
+    get componentName(){
+        return "";
+    };
 
-function convertToComponentName(className: string): string {
-    let t = className.replace(/[A-Z]/g, m => "-" + m.toLowerCase());
-    return t.slice(1, t.length - 1 - "component".length);
 }
 
 export interface OnInit {
@@ -55,19 +54,30 @@ export interface OnInit {
 export const registeredComponents = new Set<string>();
 
 export interface ComponentInformation {
+    name: string;
 }
 
 /**
  * Registers a class as a custom html element and initializes the name of the component that will be
  * later used to add css classes to the element automatically.
  */
-export function RegisteredComponent<T extends { new(...args: any[]): {} }>(constructor: T) {
-    const componentName_ = convertToComponentName(constructor.name);
+export function RegisteredComponent(componentInformation: ComponentInformation){
+    return function<T extends { new(...args: any[]): {} }>(constructor: T){
 
-    if (!registeredComponents.has(componentName_)) {
-        // @ts-ignore
-        customElements.define(componentName_, constructor);
-        registeredComponents.add(componentName_);
+        let newClass = class extends constructor {
+            get componentName(){
+                return componentInformation.name;
+            }
+        }
+
+        if (!registeredComponents.has(componentInformation.name)) {
+            // @ts-ignore
+            customElements.define(componentInformation.name, newClass);
+            registeredComponents.add(componentInformation.name);
+        }
+
+
+        return newClass;
     }
-    return constructor;
+
 }

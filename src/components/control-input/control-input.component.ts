@@ -11,7 +11,10 @@ export interface InputConfig {
     placeholder?: string,
 }
 
-@RegisteredComponent
+
+@RegisteredComponent({
+    name: 'control-input'
+})
 export class ControlInputComponent extends Component implements OnInit {
     private input?: HTMLInputElement;
     private hiddenSpan?: HTMLSpanElement;

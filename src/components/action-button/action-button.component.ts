@@ -2,7 +2,9 @@ import {Component, OnInit, RegisteredComponent} from "../../core/component";
 
 import "./action-button.style.scss";
 
-@RegisteredComponent
+@RegisteredComponent({
+    name: 'action-button'
+})
 export class ActionButtonComponent extends Component implements OnInit {
     constructor(private actionName: string, private iconName: string, private action: (e: MouseEvent | KeyboardEvent) => void) {
         super();

@@ -14,7 +14,9 @@ import {
 import "./my-target.style.scss";
 import {DateInputComponent} from "@components/date-input/date-input.component";
 
-@RegisteredComponent
+@RegisteredComponent({
+    name: 'my-target'
+})
 export class MyTargetComponent extends Component implements OnInit {
     private readonly target_: Target;
     private checkbox?: MyCheckboxComponent;
