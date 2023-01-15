@@ -20,5 +20,4 @@ export class ActionButtonComponent extends Component implements OnInit {
             console.log(e.key);
         });
     }
-
 }
