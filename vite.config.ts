@@ -6,6 +6,7 @@ export default defineConfig({
     build: {
         rollupOptions: {
             input: ['index.html', 'add-goal.html', 'goal.html', 'dashboard.html']
-        }
+        },
+        outDir: 'docs'
     }
 })
