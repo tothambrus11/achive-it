@@ -20,6 +20,7 @@ export class MyTargetComponent extends Component implements OnInit {
     private checkbox?: MyCheckboxComponent;
     private rowContainer?: HTMLDivElement;
     private childrenContainer?: HTMLDivElement;
+    private contentContainer?: HTMLDivElement;
     private titleInput?: HTMLInputElement;
     private maxAmountEl?: HTMLSpanElement;
     private currentAmountEl?: ControlInputComponent;
@@ -127,10 +128,8 @@ export class MyTargetComponent extends Component implements OnInit {
         targetHeader.classList.add('target-header');
         goodPlaceContainer.append(targetHeader);
 
-        if (this.target_.details || this.target_.date) {
-            let contentContainer = this.createContentContainer();
-            goodPlaceContainer.append(contentContainer);
-        }
+        this.contentContainer = this.createContentContainer();
+        goodPlaceContainer.append(this.contentContainer);
 
         let box = document.createElement('div');
         box.classList.add('target-checkbox');
@@ -218,6 +217,26 @@ export class MyTargetComponent extends Component implements OnInit {
         }
 
         return contentContainer;
+    }
+
+    private createDetails(): HTMLDivElement {
+        let details = document.createElement('div');
+        details.classList.add('target-details');
+
+        let icon = document.createElement('img');
+        icon.src = '/icons/description-black.svg';
+        details.append(icon);
+
+        let text = document.createElement('span');
+        text.contentEditable = 'true';
+        text.innerText = this.target_.details!;
+        new MutationObserver(() => {
+            this.target_.details = text.innerText;
+        }).observe(text, {attributes: false, childList: true});
+
+        details.append(text);
+
+        return details;
     }
 
     private createChildrenContainer(): HTMLDivElement {

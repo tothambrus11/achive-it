@@ -15,7 +15,7 @@ h1{
 }
 
 .app-layout {
-  margin: 0 auto;
+  margin: 0 auto 32px;
 }
 
 .app-layout.dashboard {
@@ -28,5 +28,64 @@ $magic-number: 100px;
 .app-layout.goal {
   width: calc(100% - #{$magic-number * 2});
   max-width: 80%;
+}
+
+.goal-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 32px;
+
+  > * {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+  }
+}
+
+.app-layout > .target-list:not(:empty) + div > .add-target-btn {
+  display: none;
+}
+
+.add-target-btn {
+  border: none !important;
+  color: #C8BFBF;
+  border-radius: 3px !important;
+  padding: 8px 16px !important;
+
+  > p {
+    font-weight: 400 !important;
+  }
+
+  &:hover {
+    background-color: #FAF7F7 !important;
+    color: #928383;
+  }
+}
+
+.goal-title{
+  width: 100%;
+  font-weight: 400;
+  font-size: 36px;
+  border: none;
+  padding: 16px 0;
+  font-family: inherit;
+
+  outline: none;
+
+  @mixin placeholder-style {
+    font-style: italic;
+    color: colors.$secondary-text;
+  }
+
+  &::-webkit-input-placeholder {
+    @include placeholder-style;
+  }
+  &::-ms-input-placeholder{
+    @include placeholder-style;
+  }
+  &::placeholder {
+    @include placeholder-style;
+  }
 }
 

@@ -3,6 +3,12 @@ import {ProgressBarComponent} from "@components/progress-bar/progressbar.compone
 import {calculateProgress, Target, TargetType} from "../lib/target";
 import {MyTargetComponent} from "@components/my-target/my-target.component";
 import {IconButtonComponent} from "@components/icon-button/icon-button.component";
+import {DateInputComponent} from "@components/date-input/date-input.component";
+import {Observable} from "../core/observable";
+import {ActionButtonComponent} from "@components/action-button/action-button.component";
+import {
+    TargetTypeSelectionComponent
+} from "@components/target-type-selection/target-type-selection.component";
 
 const appContainer = document.querySelector(".app-layout")!;
 
@@ -20,13 +26,27 @@ let progress = new ProgressBarComponent();
 progress.style.marginBottom = "10px";
 appContainer.appendChild(progress);
 
+const someDiv = document.createElement('div');
+someDiv.classList.add('goal-buttons');
+appContainer.append(someDiv);
+
+//Goal Settings (date, details)
+const goalSettings = document.createElement('div');
+someDiv.append(goalSettings);
+
+const goalDate = new Observable<string>('2023-12-23');
+let dateInput = new DateInputComponent(goalDate);
+dateInput.style.gap = '3px';
+goalSettings.append(dateInput);
+
+const addDetailsButton = new ActionButtonComponent("Add details", "add-description", () => {
+    alert("Add details field to goal. To be implemented with the backend support. Currently we just display the details fields if they are already added to the goal.");
+});
+goalSettings.append(addDetailsButton);
+
+// Target manipulations
 let buttonContainer = document.createElement('div');
-buttonContainer.style.display = 'flex';
-buttonContainer.style.flexDirection = 'row';
-buttonContainer.style.justifyContent = 'flex-end';
-buttonContainer.style.gap = '5px';
-buttonContainer.style.marginBottom = "32px";
-appContainer.appendChild(buttonContainer);
+someDiv.appendChild(buttonContainer);
 
 let markComplete = new IconButtonComponent('/icons/tick-circle.svg', 'MARK COMPLETED');
 markComplete.classList.add('icon-button-green');
@@ -150,6 +170,11 @@ let targets: Target[] = [
 
 export function updateGoalProgress() {
     let p = 0;
+    if(targets.length == 0) {
+        progress.setAttribute("rate", "0");
+        return;
+    }
+
     targets.forEach((target) => {
         p += target.calculatedProgress!;
     });
@@ -172,7 +197,6 @@ cancelGoals.addEventListener('click', () => {
 let overallProgress = 0;
 targets.forEach(target => {
     overallProgress += calculateProgress(target);
-    console.log(calculateProgress(target), "asd")
 });
 if (targets.length > 0) {
     overallProgress /= targets.length;
@@ -180,11 +204,40 @@ if (targets.length > 0) {
 console.log(overallProgress);
 progress.setAttribute('rate', overallProgress.toString());
 
+const components = new Array<MyTargetComponent>();
 for (let target of targets) {
     let el = new MyTargetComponent(target);
     targetListEl.append(el);
-    markComplete.addEventListener('click', () => el.finishTarget());
+    components.push(el);
 }
+
+markComplete.addEventListener('click', () => {
+    components.forEach(targetEl => {
+        targetEl.finishTarget();
+    })
+})
 appContainer.appendChild(targetListEl);
+
+const addTarget = document.createElement('div');
+addTarget.style.display = 'flex';
+addTarget.style.justifyContent = 'center';
+addTarget.style.marginTop = '20px';
+appContainer.appendChild(addTarget);
+
+let ttsContainer = document.createElement('div');
+ttsContainer.classList.add('tts-cont');
+let targetTypeSelection = new TargetTypeSelectionComponent();
+targetTypeSelection.style.display = 'none';
+ttsContainer.append(targetTypeSelection);
+addTarget.append(ttsContainer);
+
+const targetBtn = new IconButtonComponent('/icons/plus.svg', 'Add Target');
+targetBtn.classList.add('add-target-btn');
+targetBtn.addEventListener('click', () => {
+    targetTypeSelection.style.display = 'block';
+});
+addTarget.addEventListener('focusout', () => addTarget.style.display = 'none');
+
+addTarget.appendChild(targetBtn);
 
 export default 10;

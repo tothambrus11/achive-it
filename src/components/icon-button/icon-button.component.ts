@@ -10,6 +10,8 @@ export class IconButtonComponent extends Component implements OnInit {
     }
 
     async onInit() {
+        this.tabIndex = 0;
+
         const img = document.createElement('img');
         img.src = this.icon;
         this.append(img);
