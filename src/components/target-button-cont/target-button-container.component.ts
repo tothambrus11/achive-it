@@ -16,7 +16,7 @@ export class TargetButtonContainerComponent extends Component implements OnInit 
     async onInit() {
         const leftChildButton = document.createElement('img');
         leftChildButton.tabIndex = 0;
-        leftChildButton.src = '/add-left.png';
+        leftChildButton.src = '/achive-it/add-left.png';
         leftChildButton.alt = 'Add target one level up';
         leftChildButton.title = 'Add target one level up';
         leftChildButton.width = 50;
@@ -29,7 +29,7 @@ export class TargetButtonContainerComponent extends Component implements OnInit 
 
         const belowChildButton = document.createElement('img');
         belowChildButton.tabIndex = 0;
-        belowChildButton.src = '/add-below.png';
+        belowChildButton.src = '/achive-it/add-below.png';
         belowChildButton.alt = 'Add target at the same depth';
         belowChildButton.title = 'Add target at the same depth';
         belowChildButton.width = 50;
@@ -41,7 +41,7 @@ export class TargetButtonContainerComponent extends Component implements OnInit 
 
         const rightChildButton = document.createElement('img');
         rightChildButton.tabIndex = 0;
-        rightChildButton.src = '/add-right.png';
+        rightChildButton.src = '/achive-it/add-right.png';
         rightChildButton.alt = 'Add child target';
         rightChildButton.title = 'Add child target';
         rightChildButton.width = 50;

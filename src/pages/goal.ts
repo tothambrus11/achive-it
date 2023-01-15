@@ -13,7 +13,7 @@ import "../style.scss";
 
 const appContainer = document.querySelector(".app-layout")!;
 
-let header = new MyHeaderComponent({name: 'My Goals', url: '/dashboard.html'});
+let header = new MyHeaderComponent({name: 'My Goals', url: '/achive-it/dashboard.html'});
 appContainer.appendChild(header);
 
 // Add title element
@@ -84,11 +84,11 @@ goalSettings.append(addDetailsButton);
 let buttonContainer = document.createElement('div');
 someDiv.appendChild(buttonContainer);
 
-let markComplete = new IconButtonComponent('/icons/tick-circle.svg', 'MARK COMPLETED');
+let markComplete = new IconButtonComponent('/achive-it/icons/tick-circle.svg', 'MARK COMPLETED');
 markComplete.classList.add('icon-button-green');
 buttonContainer.appendChild(markComplete);
 
-let cancelGoals = new IconButtonComponent('/icons/very-dissatisfied-circle.svg', 'CANCEL GOAL');
+let cancelGoals = new IconButtonComponent('/achive-it/icons/very-dissatisfied-circle.svg', 'CANCEL GOAL');
 cancelGoals.classList.add('icon-button-red');
 cancelGoals.addEventListener('click', () => {
     if(!confirm('Are you sure you want to cancel the goal?'))

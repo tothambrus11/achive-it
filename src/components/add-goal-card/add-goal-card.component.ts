@@ -21,7 +21,7 @@ export class AddGoalCardComponent extends GoalCardContainerComponent implements 
         this.append(title);
 
         this.addEventListener('click', () => {
-            window.location.href = '/add-goal.html';
+            window.location.href = '/achive-it/add-goal.html';
         });
     }
 

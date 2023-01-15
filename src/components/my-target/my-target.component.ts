@@ -227,7 +227,7 @@ export class MyTargetComponent extends Component implements OnInit {
         details.classList.add('target-details');
 
         let icon = document.createElement('img');
-        icon.src = '/icons/description-black.svg';
+        icon.src = '/achive-it/icons/description-black.svg';
         details.append(icon);
 
         let text = document.createElement('span');

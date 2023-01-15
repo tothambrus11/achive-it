@@ -13,7 +13,7 @@ export class MyCheckboxComponent extends Component implements OnInit {
     async onInit() {
         this.content = document.createElement("div");
         this.content.innerHTML = `
-<img src="/icons/check-small.svg" alt="" width="16" height="16">
+<img src="/achive-it/icons/check-small.svg" alt="" width="16" height="16">
 <div class="checkbox-container">
     <div style="z-index: 1">
         <div class="checkbox-part clipped">

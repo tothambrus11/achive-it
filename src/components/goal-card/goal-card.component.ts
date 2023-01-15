@@ -47,14 +47,14 @@ export class GoalCardComponent extends GoalCardContainerComponent implements OnI
         this.append(this.progress);
 
         this.menu = document.createElement("img");
-        this.menu.src = "/hamburger.svg";
+        this.menu.src = "/achive-it/hamburger.svg";
         this.menu.classList.add("menu");
         this.append(this.menu);
 
         this.goal = this.goal_;
 
         this.addEventListener('click', () => {
-            window.location.href = '/goal.html';
+            window.location.href = '/achive-it/goal.html';
         });
     }
 

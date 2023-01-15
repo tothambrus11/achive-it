@@ -20,7 +20,7 @@ export class DateInputComponent extends Component implements OnInit {
 
     async onInit() {
         let icon = document.createElement('img');
-        icon.src = '/icons/date-black.svg';
+        icon.src = '/achive-it/icons/date-black.svg';
         this.append(icon);
 
         let dateInput = this.dateInput = document.createElement('input');
