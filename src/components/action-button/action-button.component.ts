@@ -13,7 +13,7 @@ export class ActionButtonComponent extends Component implements OnInit {
 
     async onInit() {
         this.title = this.actionName;
-        this.style.setProperty("--mask-url", `url(/icons/${this.iconName}.svg)`);
+        this.style.setProperty("--mask-url", `url(/achive-it/icons/${this.iconName}.svg)`);
         this.tabIndex = 0;
 
         this.addEventListener("click", this.action);
