@@ -8,5 +8,6 @@ export default defineConfig({
             input: ['index.html', 'add-goal.html', 'goal.html', 'dashboard.html']
         },
         outDir: 'docs'
-    }
+    },
+    base: '/achive-it/'
 })
