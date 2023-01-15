@@ -111,14 +111,18 @@ $light-edge-color: #EBEBEB;
 
   .target-content {
     margin-left: 42px;
-    margin-bottom: 8px;
     display: flex;
     flex-direction: column;
   }
 
-  .target-details, .target-date {
+  .target-content:not(:empty){
+    margin-bottom: 8px;
+  }
+
+  .target-details, date-input {
     display: flex;
     flex-direction: row;
+
     margin: 2px 0;
 
     > *:first-child {
@@ -134,24 +138,6 @@ $light-edge-color: #EBEBEB;
 
   .target-details {
     color: #928383;
-  }
-
-  .target-date > input {
-    background-color: #D9D9D9;
-    height: 22px;
-    border-radius: 10px;
-    color: #565656;
-    font-size: 10px;
-    padding: 0 5px;
-    font-family: inherit;
-    width: 98px;
-    outline: none;
-    border: 2px solid transparent;
-    box-sizing: border-box;
-
-    &:focus-visible {
-      border: 2px dashed colors.$secondary-text;
-    }
   }
 
   .title-input {
@@ -191,10 +177,34 @@ $light-edge-color: #EBEBEB;
     }
   }
 
-  .target-amount-1b1 {
+  .target-amount-span {
     white-space: nowrap;
     color: colors.$secondary-text;
     cursor: pointer;
+  }
+
+  .control-money {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 18px;
+    gap: 8px;
+
+
+    & > action-button {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  .target-content span:read-write {
+    width: 100%;
+    text-align: justify;
+
+    border-radius: 3px;
+    &:focus-visible {
+      outline: 2px dashed colors.$secondary-text;
+    }
   }
 }
 

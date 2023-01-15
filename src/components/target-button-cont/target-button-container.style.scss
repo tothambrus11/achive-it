@@ -1,6 +1,8 @@
 target-button-container {
+  display: flex;
+  flex-direction: column;
 
-  div {
+  div:not(.tts-cont) {
     opacity: 0;
     transition: .1s;
 
@@ -9,7 +11,7 @@ target-button-container {
     justify-content: center;
   }
 
-  &:hover div {
+  &:hover div:not(.tts-cont) {
     opacity: 100%;
     transform: scale(1);
   }
@@ -21,4 +23,22 @@ target-button-container {
     transform: scale(1.1);
     filter: brightness(90%);
   }
+
+  .tts-cont {
+    position: absolute;
+    z-index: 1000;
+    top: 0;
+    padding-top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    transition: .1s;
+    background-color: transparent;
+  }
+
+  target-type-selection{
+    display: none;
+  }
+
+
 }

@@ -11,6 +11,7 @@
   & > .hidden-span {
     position: absolute; // I'm not messing with the layout
     visibility: hidden; // No one can see me :)
+    white-space: nowrap;
   }
 
   & > input {

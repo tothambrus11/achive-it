@@ -1,14 +1,14 @@
 import {Component, OnInit, RegisteredComponent} from "../../core/Component";
+import {Observable} from "../../core/observable";
+const PADDING = 4;
 
 import "./control-input.style.scss";
-import {Observable} from "../../core/observable";
-
-const PADDING = 4;
 
 export interface InputConfig {
     inputType: string,
     min?: string,
     max?: string,
+    placeholder?: string,
 }
 
 @RegisteredComponent
@@ -24,10 +24,11 @@ export class ControlInputComponent extends Component implements OnInit {
     constructor(config: Partial<InputConfig> = {}, private observable?: Observable<string>) {
         super();
 
-        Object.assign(config, this.config);
-
+        Object.assign(this.config, config);
         if (observable) {
             observable.subscribe(value => {
+                if(this.value == value) return;
+                this._value = value;
                 this.value = value;
             });
         }
@@ -36,9 +37,11 @@ export class ControlInputComponent extends Component implements OnInit {
     async onInit() {
         this.input = document.createElement("input");
         this.input.type = this.config.inputType;
-        this.input.value = this._value;
+        this.value = this._value;
         if(this.config.min) this.input.min = this.config.min;
         if(this.config.max) this.input.max = this.config.max;
+
+        if(this.config.placeholder) this.input.placeholder = this.config.placeholder;
         
         this.append(this.input);
 
@@ -46,8 +49,22 @@ export class ControlInputComponent extends Component implements OnInit {
         this.hiddenSpan.classList.add("hidden-span");
         this.append(this.hiddenSpan);
 
+        this.input.addEventListener("keyup", (e) => {
+            if(!this.isValidValue(this.input?.value ?? "")) {
+                e.preventDefault();
+                this.value = this._value;
+            }
+        });
+
         this.input.addEventListener("input", () => {
             this.resize();
+
+            if(!this.isValidValue(this.value!)){
+                return;
+            }
+
+            this._value = this.value!;
+
             if (this.observable) {
                 this.observable.value = (this.input?.value ?? "");
             }
@@ -60,14 +77,31 @@ export class ControlInputComponent extends Component implements OnInit {
         if (!this.input || !this.hiddenSpan) return;
 
         this.hiddenSpan.innerText = this.input.value;
-        this.input.style.width = Math.max(this.hiddenSpan.offsetWidth + PADDING * 2, this.minWidth) + "px";
+        let valueWidth = this.hiddenSpan.offsetWidth + PADDING * 2;
+
+        this.hiddenSpan.innerText = this.config.placeholder ?? "";
+        let placeholderWidth = this.hiddenSpan.offsetWidth + PADDING * 2;
+        if(String(this.value).length !== 0) {
+            placeholderWidth = 0;
+        }
+
+        this.input.style.width = Math.max(valueWidth, placeholderWidth, this.minWidth) + "px";
     }
 
     get value() {
         return this.input?.value;
     }
 
-    set value(value: string | undefined) {
+    isValidValue(value: string): boolean {
+        if(!this.input) return false;
+        if(this.config.max && +value > +this.config.max) {
+            return false;
+        }
+        return true;
+    }
+
+    private set value(value: string | undefined) {
+        if(!this.isValidValue(value ?? "")) return;
         this._value = value ?? "";
         if (!this.input) return;
 

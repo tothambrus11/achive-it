@@ -1,9 +1,8 @@
 import {Component, OnInit, RegisteredComponent} from "../../core/Component";
 import {calculateProgress, Target, TargetType} from "../../lib/target";
 import {MyCheckboxComponent} from "../my-checkbox/my-checkbox.component";
-import {updateGoalProgress} from "../../pages/goal";
+import {removeTopLevelTarget, updateGoalProgress} from "../../pages/goal";
 
-import "./my-target.style.scss";
 import {ActionButtonComponent} from "@components/action-button/action-button.component";
 import {ActionListComponent} from "@components/action-list/action-list.component";
 import {ControlInputComponent} from "@components/control-input/control-input.component";
@@ -11,6 +10,9 @@ import {Observable} from "../../core/observable";
 import {
     TargetButtonContainerComponent
 } from "@components/target-button-cont/target-button-container.component";
+
+import "./my-target.style.scss";
+import {DateInputComponent} from "@components/date-input/date-input.component";
 
 @RegisteredComponent
 export class MyTargetComponent extends Component implements OnInit {
@@ -32,12 +34,7 @@ export class MyTargetComponent extends Component implements OnInit {
     recalculate() {
         calculateProgress(this.target_);
         if (this.checkbox) this.checkbox.progress = this.target_.calculatedProgress!;
-
-        let parent = this.parentElement!.parentElement!;
-        if (parent instanceof MyTargetComponent) {
-            (parent as MyTargetComponent).recalculate();
-            return;
-        }
+        this.parentTargetElement?.recalculate();
 
         updateGoalProgress();
     }
@@ -156,22 +153,51 @@ export class MyTargetComponent extends Component implements OnInit {
         return rowContainer;
     }
 
+    get parentTargetElement(): MyTargetComponent | null {
+        let parent = this.parentElement?.parentElement;
+        if (parent instanceof MyTargetComponent) {
+            return parent as MyTargetComponent;
+        }
+        return null;
+    }
+
     private createActionList() {
         let actionList = new ActionListComponent();
 
+        let THIS = this;
         const deleteButton = new ActionButtonComponent("Delete target", "delete", () => {
+            let parent = THIS.parentTargetElement;
+            this.outerHTML = '';
+            if (!parent) {
+                removeTopLevelTarget(THIS.target_);
+                return;
+            }
+            let parentTarget = parent.target_;
 
+            parentTarget.children = parent.target_.children.filter(c => c != this.target_);
+            parent.recalculate();
         });
         actionList.append(deleteButton);
 
         const addDateButton = new ActionButtonComponent("Add date", "date", () => {
+            if(this.target_.date)
+                return;
 
+            this.target_.date = '';
+            let $date = new Observable<string>(this.target_.date);
+            this.contentContainer!.append(new DateInputComponent($date));
         });
         actionList.append(addDateButton);
 
         const addDetailsButton = new ActionButtonComponent("Add details", "add-description", () => {
+            if(this.target_.details)
+                return;
 
+            this.target_.details = 'Write something S.M.A.R.T...';
+            let details = this.createDetails();
+            this.contentContainer!.prepend(details);
         });
+
         actionList.append(addDetailsButton);
 
         return actionList;
@@ -182,32 +208,13 @@ export class MyTargetComponent extends Component implements OnInit {
         contentContainer.classList.add('target-content');
 
         if (this.target_.details) {
-            let details = document.createElement('div');
-            details.classList.add('target-details');
+            let details = this.createDetails();
             contentContainer.append(details);
-
-            let icon = document.createElement('img');
-            icon.src = '/icons/description-black.svg';
-            details.append(icon);
-
-            let text = document.createElement('span');
-            text.innerText = this.target_.details;
-            details.append(text);
         }
 
         if (this.target_.date) {
-            let date = document.createElement('div');
-            date.classList.add('target-date');
-            contentContainer.append(date);
-
-            let icon = document.createElement('img');
-            icon.src = '/icons/date-black.svg';
-            date.append(icon);
-
-            let dateInput = document.createElement('input');
-            dateInput.type = 'date';
-            dateInput.value = this.target_.date;
-            date.append(dateInput);
+            let $date = new Observable<string>(this.target_.date);
+            contentContainer.append(new DateInputComponent($date));
         }
 
         return contentContainer;
@@ -249,7 +256,73 @@ export class MyTargetComponent extends Component implements OnInit {
         return container;
     }
 
-    private initCollectMoneyInputs(_container: HTMLDivElement) {
+    private initCollectMoneyInputs(container: HTMLDivElement) {
+        container.classList.add("control-money");
+
+        // Init data observables for reactivity
+        const $currentAmount = this.$currentAmount = new Observable<number>(this.target_.extraData!.currentAmount, (newValue, oldValue) => {
+            return newValue >= 0 && newValue <= this.target_.extraData!.targetAmount && newValue !== oldValue;
+        });
+
+        const $targetAmount = this.$targetAmount = new Observable<number>(this.target_.extraData!.targetAmount, (newValue, oldValue) => {
+            return newValue !== oldValue;
+        });
+
+        // Listen to changes and update the model
+        $currentAmount.subscribe((currentAmount) => {
+            this.target_.extraData!.currentAmount = currentAmount;
+            this.target_.done = currentAmount >= this.target_.extraData!.targetAmount;
+            this.recalculate();
+        });
+
+        $targetAmount.subscribe((targetAmount) => {
+            this.target_.extraData!.targetAmount = targetAmount;
+            if(targetAmount < $currentAmount.value){
+                $currentAmount.value = targetAmount;
+            }
+            this.recalculate();
+        });
+
+        // two-way binding
+        const $currentAmountAsString = Observable.map<number, string>(
+            $currentAmount,
+            (numericValue) => String(numericValue),
+            (stringValue) => Number(stringValue)
+        );
+
+
+        // Init the input fields
+
+        let addButton = new ActionButtonComponent('Add amount', 'add-amount', () => {
+            if($addAmount.value){
+                $currentAmount.value = Math.max(0, Math.min($targetAmount.value, Number((+$currentAmount.value) + (+$addAmount.value))));
+                $addAmount.value = "";
+            }
+        });
+        let $addAmount = new Observable<string>("");
+
+        let addAmountInputEl = new ControlInputComponent({placeholder: "+ Add Amount"}, $addAmount);
+        this.currentAmountEl = new ControlInputComponent({min: "0", max: $targetAmount.value.toString()}, $currentAmountAsString);
+        $targetAmount.subscribe((newValue) => this.currentAmountEl!.max = newValue.toString());
+
+        container.append(addAmountInputEl);
+        container.append(addButton);
+        container.append(this.currentAmountEl);
+
+        let spanEl = document.createElement('span');
+        spanEl.classList.add("target-amount-span");
+        spanEl.title = "Target amount   \n(click to change)";
+        $targetAmount.subscribe((targetValue) => {
+            spanEl.innerText = `/ EUR ${targetValue}`;
+        });
+        spanEl.addEventListener('click', () => {
+            let result = prompt("New target:", $targetAmount.value.toString())
+            if(result){
+                $targetAmount.value = Number(result);
+            }
+        });
+
+        container.append(spanEl);
 
     }
 
@@ -298,7 +371,7 @@ export class MyTargetComponent extends Component implements OnInit {
         container.append(this.currentAmountEl);
 
         let spanEl = document.createElement('span');
-        spanEl.classList.add("target-amount-1b1");
+        spanEl.classList.add("target-amount-span");
         spanEl.title = "Target amount   \n(click to change)";
         $targetAmount.subscribe((targetValue) => {
             spanEl.innerText = `/ ${targetValue}`;

@@ -10,8 +10,10 @@ let header = new MyHeaderComponent({name: 'My Goals', url: '/dashboard.html'});
 appContainer.appendChild(header);
 
 // Add title element
-const titleEl = document.createElement("h1");
-titleEl.innerText = "My Goals";
+const titleEl = document.createElement("input");
+titleEl.classList.add('goal-title');
+titleEl.value = "Become a better person";
+titleEl.placeholder = 'Goal title';
 appContainer.appendChild(titleEl);
 
 let progress = new ProgressBarComponent();
@@ -155,6 +157,10 @@ export function updateGoalProgress() {
     progress.setAttribute("rate", p.toString());
 }
 
+export function removeTopLevelTarget(target: Target) {
+    targets = targets.filter((t) => t !== target);
+    updateGoalProgress();
+}
 let targetListEl = document.createElement("div");
 targetListEl.classList.add("target-list");
 cancelGoals.addEventListener('click', () => {

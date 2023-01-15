@@ -1,0 +1,25 @@
+@use "../../colors";
+
+date-input {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  & > input {
+    background-color: #D9D9D9;
+    height: 22px;
+    border-radius: 10px;
+    color: #565656;
+    font-size: 10px;
+    padding: 0 5px;
+    font-family: inherit;
+    width: 98px;
+    outline: none;
+    border: 2px solid transparent;
+    box-sizing: border-box;
+
+    &:focus-visible {
+      border: 2px dashed colors.$secondary-text;
+    }
+  }
+}
