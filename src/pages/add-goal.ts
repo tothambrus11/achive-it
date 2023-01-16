@@ -91,7 +91,7 @@ cancelGoals.addEventListener('click', () => {
     if(!confirm('Are you sure you want to cancel the goal?'))
         return;
 
-    window.location.href = '/dashboard.html';
+    window.location.href = '/achive-it/dashboard.html';
 });
 buttonContainer.appendChild(cancelGoals);
 

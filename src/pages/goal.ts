@@ -58,7 +58,7 @@ goalAdditionalDataContainer.append(detailsRow);
 
 
 const detailsIcon = document.createElement("img");
-detailsIcon.src = "/icons/description-black.svg";
+detailsIcon.src = "/achive-it/icons/description-black.svg";
 detailsRow.append(detailsIcon)
 
 const detailsField = document.createElement("div");
@@ -94,7 +94,7 @@ cancelGoals.addEventListener('click', () => {
     if(!confirm('Are you sure you want to cancel the goal?'))
         return;
 
-    window.location.href = '/dashboard.html';
+    window.location.href = '/achive-it/dashboard.html';
 });
 
 buttonContainer.appendChild(cancelGoals);
