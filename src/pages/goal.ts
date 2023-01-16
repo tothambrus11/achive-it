@@ -167,46 +167,42 @@ let targets: Target[] = [
             }
         ],
     }
-]
+];
+let targetsObserver = new Observable(targets);
+targetsObserver.subscribe(() => updateGoalProgress());
 
 export function updateGoalProgress() {
     let p = 0;
-    if(targets.length == 0) {
+    if(targetsObserver.value.length == 0) {
         progress.setAttribute("rate", "0");
         return;
     }
 
-    targets.forEach((target) => {
+    targetsObserver.value.forEach((target) => {
         p += target.calculatedProgress!;
     });
-    p /= targets.length;
+    p /= targetsObserver.value.length;
     progress.setAttribute("rate", p.toString());
 }
 
-export function removeTopLevelTarget(target: Target) {
-    targets = targets.filter((t) => t !== target);
-    updateGoalProgress();
-}
 let targetListEl = document.createElement("div");
 targetListEl.classList.add("target-list");
 cancelGoals.addEventListener('click', () => {
     targetListEl.innerHTML = '';
-    targets = new Array<Target>();
+    targetsObserver.value = [];
     progress.setAttribute('rate', '0');
 });
 
 let overallProgress = 0;
-targets.forEach(target => {
-    overallProgress += calculateProgress(target);
-});
-if (targets.length > 0) {
-    overallProgress /= targets.length;
+targetsObserver.value.forEach(target => overallProgress += calculateProgress(target));
+if (targetsObserver.value.length > 0) {
+    overallProgress /= targetsObserver.value.length;
 }
 console.log(overallProgress);
 progress.setAttribute('rate', overallProgress.toString());
 
 const components = new Array<MyTargetComponent>();
-for (let target of targets) {
+for (let target of targetsObserver.value) {
     let el = new MyTargetComponent(target);
     targetListEl.append(el);
     components.push(el);
@@ -217,7 +213,11 @@ markComplete.addEventListener('click', () => {
         targetEl.finishTarget();
     })
 })
+targetsObserver.subscribe(targets => markComplete.style.display = targets.length == 0 ? 'none' : 'flex');
 appContainer.appendChild(targetListEl);
+export function removeTopLevelTarget(target: Target) {
+    targetsObserver.value = targetsObserver.value.filter((t) => t !== target);
+}
 
 const addTarget = document.createElement('div');
 addTarget.style.display = 'flex';
@@ -238,7 +238,6 @@ targetBtn.addEventListener('click', () => {
     targetTypeSelection.style.display = 'block';
 });
 addTarget.addEventListener('focusout', () => addTarget.style.display = 'none');
-
 addTarget.appendChild(targetBtn);
 
 export default 10;
