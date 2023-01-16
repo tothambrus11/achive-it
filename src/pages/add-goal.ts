@@ -102,7 +102,7 @@ const addTarget = document.createElement('div');
 addTarget.classList.add('add-target');
 appContainer.appendChild(addTarget);
 
-const targetBtn = new IconButtonComponent('/icons/plus.svg', 'Add Target');
+const targetBtn = new IconButtonComponent('/achive-it/icons/plus.svg', 'Add Target');
 targetBtn.classList.add('add-target-btn');
 targetBtn.addEventListener('click', () => targetTypeSelection.style.display = 'flex');
 targetBtn.addEventListener('focusout', () => targetTypeSelection.style.display = 'none');
