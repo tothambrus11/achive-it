@@ -59,22 +59,22 @@ let overallProgress = 0;
 progress.setAttribute('rate', overallProgress.toString());
 
 const addTarget = document.createElement('div');
-addTarget.style.display = 'flex';
-addTarget.style.justifyContent = 'center';
-addTarget.style.marginTop = '20px';
+addTarget.classList.add('add-target');
 appContainer.appendChild(addTarget);
-
-let ttsContainer = document.createElement('div');
-ttsContainer.classList.add('tts-cont');
-let targetTypeSelection = new TargetTypeSelectionComponent();
-targetTypeSelection.style.display = 'none';
-ttsContainer.append(targetTypeSelection);
-addTarget.append(ttsContainer);
 
 const targetBtn = new IconButtonComponent('/icons/plus.svg', 'Add Target');
 targetBtn.classList.add('add-target-btn');
 targetBtn.addEventListener('click', () => targetTypeSelection.style.display = 'block');
 targetBtn.addEventListener('focusout', () => targetTypeSelection.style.display = 'none');
 addTarget.appendChild(targetBtn);
+
+let ttsContainer = document.createElement('div');
+ttsContainer.classList.add('tts-cont');
+let targetTypeSelection = new TargetTypeSelectionComponent();
+targetTypeSelection.style.display = 'none';
+ttsContainer.append(targetTypeSelection);
+targetBtn.append(ttsContainer);
+
+
 
 export default 10;

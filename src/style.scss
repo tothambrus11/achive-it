@@ -47,11 +47,25 @@ $magic-number: 100px;
   display: none;
 }
 
+.add-target {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+
+  .tts-cont {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, calc(100% + 8px));
+    bottom: 0;
+  }
+}
+
 .add-target-btn {
   border: none !important;
   color: #C8BFBF;
   border-radius: 3px !important;
   padding: 8px 16px !important;
+  position: relative;
 
   > p {
     font-weight: 400 !important;
