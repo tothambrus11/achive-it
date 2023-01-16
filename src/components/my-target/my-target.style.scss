@@ -196,15 +196,5 @@ $light-edge-color: #EBEBEB;
       height: 20px;
     }
   }
-
-  .target-content span:read-write {
-    width: 100%;
-    text-align: justify;
-
-    border-radius: 3px;
-    &:focus-visible {
-      outline: 2px dashed colors.$secondary-text;
-    }
-  }
 }
 

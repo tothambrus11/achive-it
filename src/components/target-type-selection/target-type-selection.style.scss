@@ -1,6 +1,7 @@
 @use "../../colors";
 
 target-type-selection {
+  flex-direction: column;
   width: 160px;
   border-radius: 20px;
   box-shadow: 0 2px 14px 3px rgba(0, 0, 0, 0.1);

@@ -37,14 +37,48 @@ appContainer.append(someDiv);
 const goalSettings = document.createElement('div');
 someDiv.append(goalSettings);
 
-const goalDate = new Observable<string>('');
-let dateInput = new DateInputComponent(goalDate);
+const goalAdditionalDataContainer = document.createElement('div');
+goalAdditionalDataContainer.classList.add('goal-additional-data-container');
+appContainer.append(goalAdditionalDataContainer);
+
+
+// Creating date row
+
+const goalDate = new Observable<string>("");
+const dateInput = new DateInputComponent(goalDate);
 dateInput.style.gap = '3px';
+dateInput.style.display = "none";
 goalSettings.append(dateInput);
 
-const addDetailsButton = new ActionButtonComponent("Add details", "add-description", () => {
-    alert("Add details field to goal. To be implemented with the backend support. Currently we just display the details fields if they are already added to the goal.");
+
+// Creating details row
+let detailsRow = document.createElement("div");
+detailsRow.classList.add("details-row");
+detailsRow.style.display = "none";
+goalAdditionalDataContainer.append(detailsRow);
+
+
+const detailsIcon = document.createElement("img");
+detailsIcon.src = "/icons/description-black.svg";
+detailsRow.append(detailsIcon)
+
+const detailsField = document.createElement("div");
+detailsField.contentEditable = "true";
+detailsField.style.width = "100%";
+detailsField.innerText = "Write something S.M.A.R.T...";
+detailsRow.append(detailsField);
+
+const addDateButton = new ActionButtonComponent("Add date", "date-black", () => {
+    dateInput.style.display = 'flex';
+    addDateButton.style.display = 'none';
 });
+
+const addDetailsButton = new ActionButtonComponent("Add details", "add-description", () => {
+    detailsRow.style.display = 'flex';
+    addDetailsButton.style.display = 'none';
+});
+
+goalSettings.append(addDateButton);
 goalSettings.append(addDetailsButton);
 
 // Target manipulations
@@ -53,6 +87,12 @@ someDiv.appendChild(buttonContainer);
 
 let cancelGoals = new IconButtonComponent('/icons/very-dissatisfied-circle.svg', 'CANCEL GOAL');
 cancelGoals.classList.add('icon-button-red');
+cancelGoals.addEventListener('click', () => {
+    if(!confirm('Are you sure you want to cancel the goal?'))
+        return;
+
+    window.location.href = '/dashboard.html';
+});
 buttonContainer.appendChild(cancelGoals);
 
 let overallProgress = 0;
@@ -64,7 +104,7 @@ appContainer.appendChild(addTarget);
 
 const targetBtn = new IconButtonComponent('/icons/plus.svg', 'Add Target');
 targetBtn.classList.add('add-target-btn');
-targetBtn.addEventListener('click', () => targetTypeSelection.style.display = 'block');
+targetBtn.addEventListener('click', () => targetTypeSelection.style.display = 'flex');
 targetBtn.addEventListener('focusout', () => targetTypeSelection.style.display = 'none');
 addTarget.appendChild(targetBtn);
 
