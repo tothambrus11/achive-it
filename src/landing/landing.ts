@@ -64,3 +64,19 @@ setTimeout(() => {
 }, 100);
 
 export default 10;
+
+const idRegex = /^([A-Z])([a-zA-Z0-9$&+,:;=?@#|'<>.-^*()%!]{3,10})([0-9$&+,:;=?@#|'<>.-^*()%!])$/g;
+const passwordRegex = /^([a-zA-Z0-9$&+,:;=?@#|'<>.-^*()%!]{12,})$/g;
+const nameRegex = /^([a-zA-Z].*?)$/g;
+const zipCodeRegex = /^([0-9]{4})([A-Z]{2})$/g;
+const emailRegex = /^[a-zA-Z0-9.!#$%&’*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/g;
+
+document.querySelectorAll('input[name="id"]').forEach(el => {
+    const fieldEl = el as HTMLInputElement;
+    fieldEl.addEventListener('change', () => {
+        if(!fieldEl.value)
+            return;
+
+        console.log(fieldEl.value, idRegex.test(fieldEl.value));
+    })
+})
