@@ -43,8 +43,8 @@
 
         <form id="form-sign-in" method="POST" action="dashboard.html" style="display: block">
             <div class="box-body">
-                <input type="text" name="name" placeholder="username" required />
-                <input type="password" name="pass" placeholder="password" required />
+                <input type="text" name="name" placeholder="UserID" minlength="5" maxlength="12" required />
+                <input type="password" name="pass" placeholder="password" minlength="12" required />
             </div>
 
             <div class="box-footer">
@@ -54,10 +54,10 @@
 
         <form id="form-sign-up" method="POST" action="dashboard.html" style="display: none">
             <div class="box-body">
-                <input type="number" placeholder="ID" name="id" required />
+                <input type="text" placeholder="ID" name="id" minlength="5" maxlength="12" required />
                 <input type="text" placeholder="Name" name="name" required />
-                <input type="text" placeholder="Address" name="address" required />
-                <input type="text" placeholder="ZIP Code" name="zip" required />
+                <input type="text" placeholder="Address" name="address" />
+                <input type="text" placeholder="ZIP Code" name="zip" />
                 <input type="text" placeholder="Country" name="country" required />
                 <input type="email" placeholder="Email" name="email" required />
                 <select name="sex" required>
@@ -67,8 +67,8 @@
                     <option value="O">Other</option>5
                 </select>
                 <input type="text" placeholder="Language" name="language" required />
-                <textarea name="bio" placeholder="Biography" required></textarea>
-                <input type="password" placeholder="password" name="password" required />
+                <textarea name="bio" placeholder="Biography"></textarea>
+                <input type="password" placeholder="password" name="password" minlength="12" required />
             </div>
 
             <div class="box-footer">
