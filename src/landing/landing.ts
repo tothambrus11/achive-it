@@ -66,17 +66,53 @@ setTimeout(() => {
 export default 10;
 
 const idRegex = /^([A-Z])([a-zA-Z0-9$&+,:;=?@#|'<>.-^*()%!]{3,10})([0-9$&+,:;=?@#|'<>.-^*()%!])$/g;
-const passwordRegex = /^([a-zA-Z0-9$&+,:;=?@#|'<>.-^*()%!]{12,})$/g;
+const passRegex = /^([a-zA-Z0-9$&+,:;=?@#|'<>.-^*()%!]{12,})$/g;
 const nameRegex = /^([a-zA-Z].*?)$/g;
+const countryRegex = /^([a-zA-Z].*?)$/g;
 const zipCodeRegex = /^([0-9]{4})([A-Z]{2})$/g;
 const emailRegex = /^[a-zA-Z0-9.!#$%&’*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/g;
 
-document.querySelectorAll('input[name="id"]').forEach(el => {
-    const fieldEl = el as HTMLInputElement;
-    fieldEl.addEventListener('change', () => {
-        if(!fieldEl.value)
-            return;
+document.querySelectorAll('form').forEach(formEl => {
+    const form = formEl as HTMLFormElement;
+    form.addEventListener('submit', e => {
+        let pass: boolean = true;
+        form.querySelectorAll<HTMLInputElement>('input').forEach(input => {
+            let inputEl = input as HTMLInputElement;
+            let regex: RegExp | null;
+            switch (inputEl.name) {
+                case 'id':
+                    regex = idRegex;
+                    break;
+                case 'pass':
+                    regex = passRegex;
+                    break;
+                case 'name':
+                    regex = nameRegex;
+                    break;
+                case 'zip':
+                    regex = zipCodeRegex;
+                    break;
+                case 'email':
+                    regex = emailRegex;
+                    break;
+                case 'country':
+                    regex = countryRegex;
+                    break;
+                default:
+                    regex = null;
+                    break;
+            }
 
-        console.log(fieldEl.value, idRegex.test(fieldEl.value));
-    })
-})
+            if(!regex)
+                return;
+
+            if(!regex.test(inputEl.value)) {
+                console.log(inputEl.name, 'failed');
+                pass = false;
+            }
+        });
+
+        if(!pass)
+            e.preventDefault();
+    });
+});
