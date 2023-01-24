@@ -131,8 +131,13 @@ document.querySelectorAll('form').forEach(formEl => {
             }
 
             let msg = test(fieldInfo, inputEl.value);
-            msg ? error(note, msg) : success(note);
-            pass = false;
+            if(msg) {
+                pass = false;
+                error(note, msg);
+                return;
+            }
+
+            success(note);
         });
 
         if(!pass)
