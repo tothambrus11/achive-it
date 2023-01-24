@@ -123,21 +123,73 @@ document.querySelectorAll('form').forEach(formEl => {
                 success(note);
                 return;
             }
-
-            if(inputField.required && !inputEl.value) {
-                error(note, 'This is a required field');
-                return;
-            }
-
-            if(!inputField.regex || inputField.regex.test(inputEl.value)) {
-                success(note);
-                return;
-            }
-
-            error(note, inputField.regexMessage ? inputField.regexMessage : 'Please provide a valid '+inputEl.name);
+            
+            let msg = test(fieldInfo, inputEl.value);
+            msg ? error(note, msg) : success(note);
         });
     });
 });
+
+function isAlphabetic(character: string){
+    character = character.toLowerCase();
+    return character >= 'a'&& character <= 'z';
+}
+
+function test(field: InputField, value: string): string | null {
+    if(field.required && !value)
+        return 'This is a required field';
+
+    if(field.startWithCapital){
+        if(value.length == 0 || value.charAt(0) < 'A' || value.charAt(0) > 'Z')
+            return "Must start with a capital letter";
+    }
+
+    if(field.minLength){
+        if(value.length < field.minLength)
+            return "Minimum length is " + field.minLength;
+    }
+
+    if(field.maxLength)
+        if(value.length > field.maxLength)
+            return "Maximum length is " + field.minLength;
+
+    if(field.alphabeticOnly){
+        for(let i = 0; i < value.length; i++){
+            if(!isAlphabetic(value.charAt(i))){
+                return "Only alphabetical characters are allowed."
+            }
+        }
+    }
+
+    if(field.isEmailAddress){
+        if(value.indexOf('.') === -1 || value.indexOf('@') === -1
+            || value.indexOf('@') > value.lastIndexOf('.')) {
+            return 'Invalid email address';
+        }
+    }
+
+    if(field.zipCode) {
+        if(value.length != 6)
+            return 'Zip should be of format 1234AB';
+
+        for(let i = 0; i < 4; i++)
+            if(value.charAt(i) < '0' || value.charAt(i) > '9')
+                return 'Zip should be of format 1234AB';
+
+        for(let i = 4; i < 6; i++)
+            if(value.charAt(i) < 'A' || value.charAt(i) > 'Z')
+                return 'Zip should be of format 1234AB';
+    }
+
+    if(field.endWithNumberOrSpecialCharacter){
+        let lastChar = value.charAt(value.length-1);
+        if(isAlphabetic(lastChar)){
+            return "Must end with a special character or a number.";
+        }
+    }
+
+    return null;
+}
 
 function getNote(input: HTMLElement, id: string): HTMLSpanElement {
     let note = input.parentElement!.querySelector('#note-'+id) as HTMLSpanElement;
@@ -162,9 +214,13 @@ function error(note: HTMLSpanElement, message: string): void {
 }
 
 interface InputField {
-    regex: RegExp | null;
-    
-    regexMessage?: string;
-    required: boolean;
-
+    minLength?: number;
+    maxLength?: number;
+    startWithCapital?: boolean;
+    required?: boolean;
+    isEmailAddress?: boolean;
+    alphabeticOnly?: boolean;
+    endWithNumberOrSpecialCharacter?: boolean;
+    zipCode?: boolean;
+    sex?: boolean;
 }
