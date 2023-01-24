@@ -117,7 +117,7 @@ document.querySelectorAll('form').forEach(formEl => {
         e.preventDefault();
 
         let pass: boolean = true;
-        let values: Array<{name: string, value: string}> = new Array();
+        let values: Array<{name: string, value: string}> = [];
 
         let inputs: HTMLElement[] = new Array<HTMLElement>();
         form.querySelectorAll('input').forEach(input => inputs.push(input));
