@@ -84,3 +84,17 @@ footer{
   font-size: 0.8rem;
   margin-top: -5px;
 }
+
+#gdpr-hell{
+  position: absolute;
+  left: 50%;
+  bottom: 50%;
+  padding: 32px;
+  box-sizing: border-box;
+  transform: translate(-50%, -50%);
+
+  background-color: #f00;
+  color: white;
+  font-family: "Times New Roman", serif;
+  border: 2px solid white;
+}
