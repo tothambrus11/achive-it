@@ -150,6 +150,23 @@ document.querySelectorAll('form').forEach(formEl => {
     });
 });
 
+function showGdprHell(){
+    let gdprHellElement = document.getElementById("gdpr-hell")! as unknown as HTMLDivElement;
+
+    let secondsSpent = Math.floor((+Date.now() - trackingInfo.sessionStarted) / 1000);
+    let minutesSpent = Math.floor(secondsSpent / 60);
+    secondsSpent -= minutesSpent * 60;
+
+    gdprHellElement.innerHTML = `Number of mouse clicks: ${trackingInfo.clickCount}<br>
+Total time spent: ${minutesSpent} minutes and ${secondsSpent} seconds<br>
+Total key presses: ${trackingInfo.keypressCount}<br>
+Total number of characters types: ${trackingInfo.charactersTyped}<br>
+<a href="./goal.html">Proceed to goal page</a>
+`;
+
+    gdprHellElement.style.display = "block";
+}
+
 function isAlphabetic(character: string){
     character = character.toLowerCase();
     return character >= 'a'&& character <= 'z';
