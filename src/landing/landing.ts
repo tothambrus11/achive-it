@@ -1,5 +1,6 @@
 import "../style.scss";
 import "./landing-page.scss";
+import {initTrackingInfo, resetTrackingInfo, trackingInfo} from "./behaviourTracking";
 
 const box = document.querySelector("#login-box")!;
 const flyingThing = box.querySelector<HTMLDivElement>(".flying-thingy")!;
@@ -30,6 +31,7 @@ signUpButton.addEventListener("click", () => {
 function updateForm() {
     formSignIn.style.display = isSignIn ? 'block' : 'none';
     formSignUp.style.display = !isSignIn ? 'block' : 'none';
+    resetTrackingInfo();
 }
 
 function signInButtonX() {
@@ -43,6 +45,8 @@ function signUpButtonX() {
 document.addEventListener('readystatechange', () => {
     updateForm();
     moveFlyingThingTo(signInButtonX());
+
+    initTrackingInfo();
 });
 
 window.addEventListener("resize", () => {
@@ -112,6 +116,9 @@ document.querySelectorAll('form').forEach(formEl => {
     form.addEventListener('submit', e => {
         e.preventDefault();
 
+        let pass: boolean = true;
+        let values: Array<{name: string, value: string}> = new Array();
+
         let inputs: HTMLElement[] = new Array<HTMLElement>();
         form.querySelectorAll('input').forEach(input => inputs.push(input));
         form.querySelectorAll('select').forEach(input => inputs.push(input));
@@ -122,7 +129,7 @@ document.querySelectorAll('form').forEach(formEl => {
             let inputField = inputFields[inputEl.name];
 
             let note = getNote(inputEl, inputEl.name);
-
+            values.push({name: inputEl.name, value: inputEl.value});
             if(!inputField) {
                 success(note);
                 return;
@@ -139,7 +146,21 @@ document.querySelectorAll('form').forEach(formEl => {
             }
 
             error(note, inputField.regexMessage ? inputField.regexMessage : 'Please provide a valid '+inputEl.name);
+            pass = false;
         });
+
+        if(!pass)
+            return;
+
+        let str = '';
+        values.forEach(value => {
+            str += value.name+': '+value.value+'\n';
+        });
+
+        alert(str);
+
+        if(form.getAttribute('id') === 'form-sign-up')
+            showGdprHell();
     });
 });
 
