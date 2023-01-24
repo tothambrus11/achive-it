@@ -1,5 +1,6 @@
 import "../style.scss";
 import "./landing-page.scss";
+import {initTrackingInfo, resetTrackingInfo, trackingInfo} from "./behaviourTracking";
 
 const box = document.querySelector("#login-box")!;
 const flyingThing = box.querySelector<HTMLDivElement>(".flying-thingy")!;
@@ -30,6 +31,7 @@ signUpButton.addEventListener("click", () => {
 function updateForm() {
     formSignIn.style.display = isSignIn ? 'block' : 'none';
     formSignUp.style.display = !isSignIn ? 'block' : 'none';
+    resetTrackingInfo();
 }
 
 function signInButtonX() {
@@ -43,6 +45,8 @@ function signUpButtonX() {
 document.addEventListener('readystatechange', () => {
     updateForm();
     moveFlyingThingTo(signInButtonX());
+
+    initTrackingInfo();
 });
 
 window.addEventListener("resize", () => {
@@ -107,6 +111,9 @@ document.querySelectorAll('form').forEach(formEl => {
     form.addEventListener('submit', e => {
         e.preventDefault();
 
+        let pass: boolean = true;
+        let values: Array<{name: string, value: string}> = [];
+
         let inputs: HTMLElement[] = new Array<HTMLElement>();
         form.querySelectorAll('input').forEach(input => inputs.push(input));
         form.querySelectorAll('select').forEach(input => inputs.push(input));
@@ -117,15 +124,29 @@ document.querySelectorAll('form').forEach(formEl => {
             let fieldInfo = fieldInfoList[inputEl.name];
 
             let note = getNoteElement(inputEl, inputEl.name);
-
+            values.push({name: inputEl.name, value: inputEl.value});
             if(!fieldInfo) {
                 success(note);
                 return;
             }
-            
+
             let msg = test(fieldInfo, inputEl.value);
             msg ? error(note, msg) : success(note);
+            pass = false;
         });
+
+        if(!pass)
+            return;
+
+        let str = '';
+        values.forEach(value => {
+            str += value.name+': '+value.value+'\n';
+        });
+
+        alert(str);
+
+        if(form.getAttribute('id') === 'form-sign-up')
+            showGdprHell();
     });
 });
 
