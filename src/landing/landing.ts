@@ -65,41 +65,40 @@ setTimeout(() => {
 
 export default 10;
 
-const inputFields: {[id: string]: InputField} = {
+const fieldInfoList: {[id: string]: InputField} = {
     'id': {
-        regex: /^([A-Z])([a-zA-Z0-9$&+,:;=?@#|'<>.-^*()%!]{3,10})([0-9$&+,:;=?@#|'<>.-^*()%!])$/,
-        regexMessage: 'ID should start with a capital letter and end with a number or special character',
+        minLength: 5,
+        maxLength: 12,
+        startWithCapital: true,
+        endWithNumberOrSpecialCharacter: true,
         required: true
     },
     'password': {
-        regex: /^([a-zA-Z0-9$&+,:;=?@#|'<>.-^*()%!]{12,})$/,
-        regexMessage: 'Password is too short',
+        minLength: 12,
         required: true
     },
     'name': {
-        regex: /^([a-zA-Z].*?)$/,
-        regexMessage: 'Name may only contain the alphabet',
+        alphabeticOnly: true,
         required: true
     },
     'country': {
-        regex: /^([a-zA-Z].*?)$/,
-        regexMessage: 'Country may only contain the alphabet',
+        alphabeticOnly: true,
         required: true
     },
     'zip': {
-        regex: /^([0-9]{4})([A-Z]{2})$/,
-        regexMessage: 'Zipcode does not follow format: 1234AB',
+        zipCode: true,
         required: true
     },
     'email': {
-        regex: /^[a-zA-Z0-9.!#$%&’*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-        regexMessage: 'Invalid email address',
+        isEmailAddress: true,
         required: true
     },
+    'language': {
+        required: true,
+        alphabeticOnly: true,
+    },
     'sex': {
-        regex: /^[MFO]$/,
-        regexMessage: 'Choose an option',
-        required: true
+        required: true,
     }
 }
 
@@ -115,11 +114,11 @@ document.querySelectorAll('form').forEach(formEl => {
 
         inputs.forEach(input => {
             const inputEl = input as unknown as (HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement);
-            let inputField = inputFields[inputEl.name];
+            let fieldInfo = fieldInfoList[inputEl.name];
 
-            let note = getNote(inputEl, inputEl.name);
+            let note = getNoteElement(inputEl, inputEl.name);
 
-            if(!inputField) {
+            if(!fieldInfo) {
                 success(note);
                 return;
             }
@@ -191,7 +190,7 @@ function test(field: InputField, value: string): string | null {
     return null;
 }
 
-function getNote(input: HTMLElement, id: string): HTMLSpanElement {
+function getNoteElement(input: HTMLElement, id: string): HTMLSpanElement {
     let note = input.parentElement!.querySelector('#note-'+id) as HTMLSpanElement;
     if(!note) {
         note = document.createElement('span');
