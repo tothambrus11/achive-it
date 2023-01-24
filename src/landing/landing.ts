@@ -100,6 +100,10 @@ const inputFields: {[id: string]: InputField} = {
         regex: /^[MFO]$/,
         regexMessage: 'Choose an option',
         required: true
+    },
+    'language': {
+        required: true,
+        regex: null
     }
 }
 
