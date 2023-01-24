@@ -69,88 +69,21 @@ setTimeout(() => {
 
 export default 10;
 
-const inputFields: {[id: string]: InputField} = {
-    'id': {
-        regex: /^([A-Z])([a-zA-Z0-9$&+,:;=?@#|'<>.-^*()%!]{3,10})([0-9$&+,:;=?@#|'<>.-^*()%!])$/,
-        regexMessage: 'ID should start with a capital letter and end with a number or special character',
-        required: true
-    },
-    'password': {
-        regex: /^([a-zA-Z0-9$&+,:;=?@#|'<>.-^*()%!]{12,})$/,
-        regexMessage: 'Password is too short',
-        required: true
-    },
-    'name': {
-        regex: /^([a-zA-Z].*?)$/,
-        regexMessage: 'Name may only contain the alphabet',
-        required: true
-    },
-    'country': {
-        regex: /^([a-zA-Z].*?)$/,
-        regexMessage: 'Country may only contain the alphabet',
-        required: true
-    },
-    'zip': {
-        regex: /^([0-9]{4})([A-Z]{2})$/,
-        regexMessage: 'Zipcode does not follow format: 1234AB',
-        required: true
-    },
-    'email': {
-        regex: /^[a-zA-Z0-9.!#$%&’*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-        regexMessage: 'Invalid email address',
-        required: true
-    },
-    'sex': {
-        regex: /^[MFO]$/,
-        regexMessage: 'Choose an option',
-        required: true
-    },
-    'language': {
-        required: true,
-        regex: null
-    }
-}
-
-document.querySelectorAll('form').forEach(formEl => {
-    const form = formEl as HTMLFormElement;
+document.querySelectorAll<HTMLFormElement>('form').forEach(form => {
     form.addEventListener('submit', e => {
         e.preventDefault();
 
-        let pass: boolean = true;
-        let values: Array<{name: string, value: string}> = new Array();
+        let values: Array<{name: string, value: string}> = [];
 
         let inputs: HTMLElement[] = new Array<HTMLElement>();
-        form.querySelectorAll('input').forEach(input => inputs.push(input));
-        form.querySelectorAll('select').forEach(input => inputs.push(input));
-        form.querySelectorAll('textarea').forEach(input => inputs.push(input));
+        formSignUp.querySelectorAll('input').forEach(input => inputs.push(input));
+        formSignUp.querySelectorAll('select').forEach(input => inputs.push(input));
+        formSignUp.querySelectorAll('textarea').forEach(input => inputs.push(input));
 
         inputs.forEach(input => {
             const inputEl = input as unknown as (HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement);
-            let inputField = inputFields[inputEl.name];
-
-            let note = getNote(inputEl, inputEl.name);
             values.push({name: inputEl.name, value: inputEl.value});
-            if(!inputField) {
-                success(note);
-                return;
-            }
-
-            if(inputField.required && !inputEl.value) {
-                error(note, 'This is a required field');
-                return;
-            }
-
-            if(!inputField.regex || inputField.regex.test(inputEl.value)) {
-                success(note);
-                return;
-            }
-
-            error(note, inputField.regexMessage ? inputField.regexMessage : 'Please provide a valid '+inputEl.name);
-            pass = false;
         });
-
-        if(!pass)
-            return;
 
         let str = '';
         values.forEach(value => {
@@ -158,11 +91,10 @@ document.querySelectorAll('form').forEach(formEl => {
         });
 
         alert(str);
-
         if(form.getAttribute('id') === 'form-sign-up')
             showGdprHell();
     });
-});
+})
 
 function showGdprHell(){
     let gdprHellElement = document.getElementById("gdpr-hell")! as unknown as HTMLDivElement;
@@ -179,33 +111,4 @@ Total number of characters types: ${trackingInfo.charactersTyped}<br>
 `;
 
     gdprHellElement.style.display = "block";
-}
-
-function getNote(input: HTMLElement, id: string): HTMLSpanElement {
-    let note = input.parentElement!.querySelector('#note-'+id) as HTMLSpanElement;
-    if(!note) {
-        note = document.createElement('span');
-        note.setAttribute('id', 'note-'+id);
-        note.classList.add('input-note');
-        input.parentNode!.insertBefore(note, input.nextSibling);
-    }
-
-    return note;
-}
-
-function success(note: HTMLSpanElement): void {
-    note.style.color = '#669B45';
-    note.innerHTML = 'Looks good!'
-}
-
-function error(note: HTMLSpanElement, message: string): void {
-    note.style.color = '#B8695F';
-    note.innerText = message;
-}
-
-interface InputField {
-    regex: RegExp | null;
-
-    regexMessage?: string;
-    required: boolean;
 }
