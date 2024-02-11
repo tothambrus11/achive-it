@@ -1,0 +1,200 @@
+@use "../../font";
+@use "../../colors";
+
+
+$dark-edge-color: #d8d8d8;
+$light-edge-color: #EBEBEB;
+
+.my-target {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  position: relative;
+
+  > .row-container {
+    width: 100%;
+    border-top: 1px solid $light-edge-color;
+    border-bottom: 1px solid $light-edge-color;
+    position: relative;
+    margin-bottom: -1px;
+
+    &:focus-within + .child-list > *:first-child > .row-container {
+      border-top-color: transparent !important;
+    }
+
+    &:focus-within + .child-list > *:first-child > .row-container > .background-element {
+      border-top-color: $dark-edge-color !important;
+    }
+
+    > .background-element {
+      content: "";
+      width: calc(200vw + 100%);
+      height: 100%;
+      position: relative;
+      left: -100vw;
+    }
+  }
+
+  > .child-list {
+    margin-left: 30px;
+  }
+
+  &:focus-within {
+    border-color: transparent;
+    z-index: 100;
+  }
+
+  .background-element {
+    margin-top: -1px;
+    margin-bottom: -1px;
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+
+    &:focus-within, &:hover {
+      background-color: #FAFAFA;
+    }
+
+    &:hover {
+      border-color: $light-edge-color;
+    }
+
+    &:hover > .good-place-row > action-list,
+    &:focus-within > .good-place-row > action-list {
+      visibility: visible !important;
+    }
+
+    &:focus-within {
+      border-color: $dark-edge-color !important;
+    }
+  }
+
+  .good-place-row {
+    margin-left: 100vw;
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 200vw);
+    position: relative; // position the controls relative to this element
+
+    target-button-container {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -13.5px;
+      margin: auto;
+    }
+
+    &:hover {
+      target-button-container {
+        z-index: 200;
+      }
+    }
+  }
+
+  .target-header {
+    width: 100%;
+    display: flex;
+    height: 46px;
+    align-items: center;
+    z-index: 1;
+
+    .target-checkbox {
+      padding: 12px;
+      width: fit-content;
+    }
+
+    .target-type-container {
+      width: fit-content;
+      display: flex;
+    }
+  }
+
+  .target-content {
+    margin-left: 42px;
+    margin-bottom: 8px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .target-details, .target-date {
+    display: flex;
+    flex-direction: row;
+    margin: 2px 0;
+
+    > *:first-child {
+      align-self: start;
+      margin-right: 8px;
+    }
+
+    > *:last-child {
+      align-self: center;
+      margin: 0;
+    }
+  }
+
+  .target-details {
+    color: #928383;
+  }
+
+  .target-date > input {
+    background-color: #D9D9D9;
+    height: 22px;
+    border-radius: 10px;
+    color: #565656;
+    font-size: 10px;
+    padding: 0 5px;
+    font-family: inherit;
+    width: 98px;
+    outline: none;
+    border: 2px solid transparent;
+    box-sizing: border-box;
+
+    &:focus-visible {
+      border: 2px dashed colors.$secondary-text;
+    }
+  }
+
+  .title-input {
+    height: 90%;
+    width: 100%;
+    font-family: font.$font;
+    font-weight: 400;
+    font-size: 18px;
+    border: none;
+    padding: 0;
+    background-color: transparent;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  & > .row-container > .background-element > .good-place-row > action-list {
+    //display: none;
+    visibility: hidden;
+  }
+
+  .control-1b1-cont {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 18px;
+
+    & > control-input {
+      margin-right: 8px;
+    }
+
+    & > action-button {
+      width: 20px;
+      height: 20px;
+      margin: 4px;
+    }
+  }
+
+  .target-amount-1b1 {
+    white-space: nowrap;
+    color: colors.$secondary-text;
+    cursor: pointer;
+  }
+}
+

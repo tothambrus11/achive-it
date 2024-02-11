@@ -1,0 +1,39 @@
+@use "colors";
+
+body {
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  overflow-x: hidden;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+.app-layout {
+  margin: 0 auto;
+}
+
+.app-layout.dashboard {
+  max-width: 80%;
+  width: calc(100% - 64px);
+}
+
+$magic-number: 100px;
+
+.app-layout.goal {
+  width: calc(100% - #{$magic-number * 2});
+  max-width: 80%;
+}
+
+h1 {
+  font-weight: 400;
+  font-size: 36px;
+}
+
+.goal-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 5px;
+  margin-bottom: 32px;
+}

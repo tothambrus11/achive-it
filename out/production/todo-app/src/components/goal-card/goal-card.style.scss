@@ -1,0 +1,23 @@
+@use "../goal-card-container/goal-card-container.style.scss";
+
+.goal-card {
+  padding: 7px;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  align-items: center;
+  flex-direction: column;
+
+  h2 {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    margin: 32px 20px;
+  }
+
+  .menu {
+    background-image: url(/public/hamburger.svg);
+    position: absolute;
+    right: 16px;
+    top: 14px;
+  }
+}
